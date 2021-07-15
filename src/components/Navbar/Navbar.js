@@ -1,12 +1,13 @@
 import css from './Navbar.module.css'
 
 const Navbar = () => {
-    return <nav className={css.nav}>
+    return (
+    <nav className={css.nav}>
         <div>
-            <a>Profile</a>
+            <a  href='/profile' className={css.activeItem}>Profile</a>
         </div>
         <div>
-            <a>Messages</a>
+            <a href='/dialogs' >Messages</a>
         </div><div>
             <a>News</a>
         </div>
@@ -17,6 +18,7 @@ const Navbar = () => {
             <a>Settings</a>
         </div>
     </nav>
+    );
 }
 
 export default Navbar;
