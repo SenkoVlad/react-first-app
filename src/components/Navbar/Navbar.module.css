@@ -1,12 +1,21 @@
 .nav {
   grid-area: n;
   background-color: burlywood;
+  padding: 20px;
 }
 
 .nav a {
   color: aliceblue;
 }
 
-.activeItem {
-  color: yellow !important;
+.item {
+  font-style: italic;
+}
+
+ a.active {
+  color: yellow;
+}
+
+a {
+  text-decoration: none;
 }
