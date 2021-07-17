@@ -2,19 +2,27 @@ import Post from './Post/Post'
 import css from './Posts.module.css'
 
 const Posts = () => {
+  let posts = [
+    {id :"1", text : "The First post", likes : "5"},
+    {id :"2", text : "The second post", likes : "6"},
+    {id :"3", text : "The third post", likes : "3"},
+    {id :"4", text : "The fourth post", likes : "7"},
+  ]
+  let postElements = posts.map(post => <Post text={posts.text} likes={posts.likes} />)
+
   return (
-    <div>
+  <div>
       <div>
-        <textarea></textarea>
-        <button>New post</button>
+        <div>
+          <textarea></textarea>
+        </div>
+        <div>
+          <button>New post</button>
+        </div>
       </div>
-      My posts
-      <div>
-        <Post text="The First post" likes='5' />
-        <Post text="The second post" likes='4' />
-        <Post text="The third post" likes='6' />
-        <Post text="The fourth post" likes='10' />
-        <Post text="The fifth post" likes='0' />
+      <h3>My posts</h3>
+      <div className={css.paddingTop10}>
+        { postElements}
       </div>
     </div>
   )
