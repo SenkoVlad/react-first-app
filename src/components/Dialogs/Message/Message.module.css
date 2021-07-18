@@ -1,0 +1,10 @@
+.message {
+    color: white;
+    text-align: right;
+    border-bottom: grey 1px;
+}
+
+.incomingMsg {
+    text-align: left !important;
+}
+
