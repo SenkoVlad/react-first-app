@@ -1,17 +1,29 @@
 import css from './Posts.module.css'
 import Post from './Post/Post'
+import React from 'react'
 
 const Posts = (props) => {
-  let postElements = props.posts.map(post => <Post text={post.text} likes={post.likes} />)
+  let postElements = props.profilePage.posts.map(post => <Post text={post.text} likes={post.likes} />)
+  let addPostTextarea = React.createRef();
+
+  let addPost = () =>{
+    props.addPost();
+    addPostTextarea.current.value = '';
+  } 
+  
+  let onPostChange = () => {
+    let newPostText = addPostTextarea.current.value;
+    props.updateNewPostText(newPostText);
+  }
 
   return (
   <div>
       <div>
         <div>
-          <textarea></textarea>
+          <textarea ref={addPostTextarea} onChange={onPostChange}></textarea>
         </div>
         <div>
-          <button>New post</button>
+          <button onClick={addPost}>New post</button>
         </div>
       </div>
       <h3>My posts</h3>
