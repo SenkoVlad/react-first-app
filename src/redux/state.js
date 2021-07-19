@@ -1,4 +1,5 @@
-import { renderTrie } from "../render";
+let renderTrie = (state) => {
+}
 
 let state = {
     dialogsPage: {
@@ -29,7 +30,7 @@ let state = {
     }
 }
 
-export let addPost = () => {
+export const addPost = () => {
     if (state.profilePage.newPostText != '') {
         let newPost = {
             id: 5,
@@ -42,9 +43,13 @@ export let addPost = () => {
     }
 }
 
-export let updateNewPostText = (newPostText) => {
+export const updateNewPostText = (newPostText) => {
     state.profilePage.newPostText = newPostText;
     window.state = state;
+}
+
+export const renderSubscribe = (subsctiber) => {
+    renderTrie = subsctiber;
 }
 
 export default state
