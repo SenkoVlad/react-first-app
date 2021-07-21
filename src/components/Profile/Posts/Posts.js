@@ -1,19 +1,20 @@
 import css from './Posts.module.css'
 import Post from './Post/Post'
 import React from 'react'
+import {newPostActionCreator, updateNewPostTextActionCreater} from './../../../redux/state'
 
 const Posts = (props) => {
   let postElements = props.profilePage.posts.map(post => <Post text={post.text} likes={post.likes} />)
   let addPostTextarea = React.createRef();
 
   let addPost = () =>{
-    props.addPost();
+    props.dispatch(newPostActionCreator());
     addPostTextarea.current.value = '';
   } 
   
   let onPostChange = () => {
     let newPostText = addPostTextarea.current.value;
-    props.updateNewPostText(newPostText);
+    props.dispatch(updateNewPostTextActionCreater(newPostText));
   }
 
   return (
