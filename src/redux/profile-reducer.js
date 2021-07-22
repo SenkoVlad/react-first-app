@@ -1,20 +1,24 @@
-import {ADD_POST, UPDATE_POST_TEXT} from './constants'
+import { ADD_POST, UPDATE_POST_TEXT } from './constants'
 
 const profileReducer = (state, action) => {
-    if (action.type == ADD_POST) {
-        if (state.newPostText !== '') {
-            let maxId = getMaxPostId(state);
-            let newPost = {
-                id: maxId + 1,
-                text: state.newPostText,
-                likes: 0
+    switch (action.type) {
+        case ADD_POST:
+            if (state.newPostText !== '') {
+                let maxId = getMaxPostId(state);
+                let newPost = {
+                    id: maxId + 1,
+                    text: state.newPostText,
+                    likes: 0
+                }
+                state.posts.push(newPost);
+                state.newPostText = '';
             }
-            state.posts.push(newPost);
-            state.newPostText = '';
-        }
-    }
-    else if (action.type == UPDATE_POST_TEXT) {
-        state.newPostText = action.text;
+            break;
+        case UPDATE_POST_TEXT:
+            state.newPostText = action.text;
+            break
+        default:
+            break;
     }
     return state;
 }
@@ -22,6 +26,18 @@ const profileReducer = (state, action) => {
 const getMaxPostId = (state) => {
     return state.posts.reduce((max, post) => post.id > max ? post.id : max,
         state.posts[0].id);
+}
+
+export const newPostActionCreator = () => {
+    return {
+        type: ADD_POST
+    }
+}
+export const updateNewPostTextActionCreater = (newText) => {
+    return {
+        type: UPDATE_POST_TEXT,
+        text: newText
+    }
 }
 
 export default profileReducer;

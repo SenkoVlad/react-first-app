@@ -1,7 +1,7 @@
 import profileReducer from './profile-reducer'
 import dialogReducer from './dialog-reducer'
 import sidebarReducer from './sidebar-reducer'
-import {ADD_POST, ADD_MESSAGE, UPDATE_POST_TEXT, UPDATE_MESSAGE_TEXT} from './constants'
+import {ADD_POST, ADD_MESSAGE} from './constants'
 
 let store = {
     _state: {
@@ -54,27 +54,4 @@ let store = {
         }
     }
 }
-export const newPostActionCreator = () => {
-    return {
-        type: ADD_POST
-    }
-}
-export const updateNewPostTextActionCreater = (newText) => {
-    return {
-        type: UPDATE_POST_TEXT,
-        text: newText
-    }
-}
-export const newMessageActionCreator = () => {
-    return {
-        type: ADD_MESSAGE
-    }
-}
-export const updateNewMessageTextActionCreater = (newText) => {
-    return {
-        type: UPDATE_MESSAGE_TEXT,
-        text: newText
-    }
-}
-
 export default store
