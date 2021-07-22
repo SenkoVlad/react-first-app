@@ -1,7 +1,7 @@
-const ADD_POST = 'add-new-post';
-const ADD_MESSAGE = 'add-new-message';
-const UPDATE_POST_TEXT = 'update-new-post-text';
-const UPDATE_MESSAGE_TEXT = 'update-new-message-text';
+import profileReducer from './profile-reducer'
+import dialogReducer from './dialog-reducer'
+import sidebarReducer from './sidebar-reducer'
+import {ADD_POST, ADD_MESSAGE, UPDATE_POST_TEXT, UPDATE_MESSAGE_TEXT} from './constants'
 
 let store = {
     _state: {
@@ -31,7 +31,8 @@ let store = {
                 { id: 4, text: "The fourth post", likes: "7" },
             ],
             newPostText: ''
-        }
+        },
+        sidebarPage: {}
     },
     _invokeSubcribeCallbback: () => { },
     setState(state) {
@@ -40,60 +41,16 @@ let store = {
     getState() {
         return this._state;
     },
-    _addPost() {
-        if (this._state.profilePage.newPostText != '') {
-            let maxId = this._getMaxPostId();
-            let newPost = {
-                id: maxId + 1,
-                text: this._state.profilePage.newPostText,
-                likes: 0
-            }
-            this._state.profilePage.posts.push(newPost);
-            this._state.profilePage.newPostText = '';
-            this._invokeSubcribeCallbback(this._state);
-        }
-    },
-    _addMessage() {
-        if (this._state.dialogsPage.newMessageText != '') {
-            let maxId = this._getMaxMessageId();
-            let newMessage = {
-                id : maxId + 1,
-                text: this._state.dialogsPage.newMessageText
-            }
-            this._state.dialogsPage.messages.push(newMessage);
-            this._state.dialogsPage.newMessageText = '';
-            this._invokeSubcribeCallbback(this._state);
-        }
-    },
-    _getMaxMessageId() {
-        return this._state.dialogsPage.messages.reduce((max, message) => message.id > max ? message.id : max,
-            this._state.dialogsPage.messages[0].id);
-    },
-    _getMaxPostId() {
-        return this._state.profilePage.posts.reduce((max, post) => post.id > max ? post.id : max,
-            this._state.profilePage.posts[0].id);
-    },
-    _updateNewPostText(newPostText) {
-        this._state.profilePage.newPostText = newPostText;
-    },
-    _updateNewMessageText(newMessageText) {
-        this._state.dialogsPage.newMessageText = newMessageText;
-    },
     setRenderSubscribe(subsctiber) {
         this._invokeSubcribeCallbback = subsctiber;
     },
     dispatch(action) {
-        if (action.type == ADD_POST) {
-            this._addPost();
-        }
-        else if (action.type == UPDATE_POST_TEXT) {
-            this._updateNewPostText(action.text);
-        }
-        else if (action.type == ADD_MESSAGE) {
-            this._addMessage();
-        }
-        else if(action.type == UPDATE_MESSAGE_TEXT) {
-            this._updateNewMessageText(action.text);
+        this._state.profilePage = profileReducer(this._state.profilePage, action);
+        this._state.dialogsPage = dialogReducer(this._state.dialogsPage, action);
+        this._state.sidebarReducer = sidebarReducer(this._state.sidebarPage, action);
+
+        if (action.type == ADD_POST || action.type == ADD_MESSAGE) {
+            this._invokeSubcribeCallbback(this._state);
         }
     }
 }
