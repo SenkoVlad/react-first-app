@@ -1,20 +1,19 @@
 import css from './Posts.module.css'
 import Post from './Post/Post'
 import React from 'react'
-import {newPostActionCreator, updateNewPostTextActionCreater} from './../../../redux/profile-reducer'
 
 const Posts = (props) => {
-  let postElements = props.profilePage.posts.map(post => <Post text={post.text} likes={post.likes} />)
+  let postElements = props.posts.map(post => <Post text={post.text} likes={post.likes} />)
   let addPostTextarea = React.createRef();
 
   let addPost = () =>{
-    props.dispatch(newPostActionCreator());
+    props.addPost();
     addPostTextarea.current.value = '';
   } 
   
   let onPostChange = () => {
     let newPostText = addPostTextarea.current.value;
-    props.dispatch(updateNewPostTextActionCreater(newPostText));
+    props.updateNewPostText(newPostText);
   }
 
   return (
