@@ -6,9 +6,7 @@ import Dialogs from './components/Dialogs/Dialogs';
 import Music from './components/Music/Music';
 import News from './components/News/News';
 import Settings from './components/Settings/Settings';
-import './redux/state'
 import { Route } from 'react-router-dom'
-import state from './redux/state';
 
 const App = (props) => {
   return (

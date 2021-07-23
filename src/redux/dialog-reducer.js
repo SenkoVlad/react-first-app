@@ -1,6 +1,25 @@
 import { ADD_MESSAGE, UPDATE_MESSAGE_TEXT } from './constants'
 
-const dialogReducer = (state, action) => {
+let initialState = {
+    dialogs: [
+        { id: 1, name: 'Dimych' },
+        { id: 2, name: 'Andrew' },
+        { id: 3, name: 'Sveta' },
+        { id: 4, name: 'Sasha' },
+        { id: 5, name: 'Viktor' },
+        { id: 6, name: 'Valera' }
+    ],
+    messages: [
+        { id: 1, text: 'Hi' },
+        { id: 2, text: 'How is your it-kamasutra?' },
+        { id: 3, text: 'Yo' },
+        { id: 4, text: 'Yo' },
+        { id: 5, text: 'Yo' }
+    ],
+    newMessageText: ''
+}
+
+const dialogReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_MESSAGE:
             if (state.newMessageText != '') {

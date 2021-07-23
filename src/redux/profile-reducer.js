@@ -1,6 +1,16 @@
 import { ADD_POST, UPDATE_POST_TEXT } from './constants'
 
-const profileReducer = (state, action) => {
+let initialState = {
+    posts: [
+        { id: 1, text: "The First post", likes: "5" },
+        { id: 2, text: "The second post", likes: "6" },
+        { id: 3, text: "The third post", likes: "3" },
+        { id: 4, text: "The fourth post", likes: "7" },
+    ],
+    newPostText: ''
+}
+
+const profileReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_POST:
             if (state.newPostText !== '') {
