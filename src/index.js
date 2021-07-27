@@ -4,24 +4,25 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom'
-import store from './redux/redux-store'
+import store from './redux/redux-store';
+import { STORE_CONTEXT } from './redux/constants';
 
-let renderTrie = (state) => {
+let renderTrie = () => {
   ReactDOM.render(
     <React.StrictMode>
       <BrowserRouter>
-        <App store={store}/>
+        <STORE_CONTEXT.Provider value={store}>
+          <App />
+        </STORE_CONTEXT.Provider>
       </BrowserRouter>
     </React.StrictMode>,
     document.getElementById('root')
   );
 }
-renderTrie(store.getState());
+renderTrie();
 
 store.subscribe(() => {
-  let state = store.getState();
-  renderTrie(state);
+  renderTrie();
 });
-
 
 reportWebVitals(console.log);
