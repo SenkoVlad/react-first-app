@@ -4,8 +4,8 @@ import { DialogItem } from "./DialogItem/DialogItem";
 import React from 'react'
 
 const Dialogs = (props) => {
-    let dialogElements = props.dialogPage.dialogs.map(elem => <DialogItem name={elem.name} id={elem.id} />)
-    let messageElements = props.dialogPage.messages.map(elem => <Message message={elem} />)
+    let dialogElements = props.dialogPage.dialogs.map(elem => <DialogItem name={elem.name} id={elem.id} key={elem.id} />)
+    let messageElements = props.dialogPage.messages.map(elem => <Message message={elem}  key={elem.id}/>)
 
     let inputMessageTextarea = React.createRef();
     
@@ -29,7 +29,7 @@ const Dialogs = (props) => {
                 </div>
                 <div>
                     <div>
-                        <textarea ref={inputMessageTextarea} onChange={onMessageTextChanched}></textarea>
+                        <textarea ref={inputMessageTextarea} onChange={onMessageTextChanched} value={props.newMessageText}></textarea>
                     </div>
                     <div>
                         <button onClick={sendMessage}>Send message</button>

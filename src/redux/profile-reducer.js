@@ -11,29 +11,29 @@ let initialState = {
 }
 
 const profileReducer = (state = initialState, action) => {
-    let stateCopy = {...state};
-    stateCopy.posts = [...state.posts];
-
     switch (action.type) {
         case ADD_POST:
-            if (stateCopy.newPostText !== '') {
-                let maxId = getMaxPostId(stateCopy);
+            if (state.newPostText !== '') {
+                let maxId = getMaxPostId(state);
                 let newPost = {
                     id: maxId + 1,
-                    text: stateCopy.newPostText,
+                    text: state.newPostText,
                     likes: 0
                 }
-                stateCopy.posts.push(newPost);
-                stateCopy.newPostText = '';
+                return {
+                    ...state,
+                    posts: [...state.posts, newPost],
+                    newPostText: ''
+                }
             }
-            break;
         case UPDATE_POST_TEXT:
-            stateCopy.newPostText = action.text;
-            break
+            return {
+                ...state,
+                newPostText: action.text
+            }
         default:
-            break;
+            return { ...state };
     }
-    return stateCopy;
 }
 
 const getMaxPostId = (state) => {
