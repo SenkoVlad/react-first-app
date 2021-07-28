@@ -6,18 +6,18 @@ const Posts = (props) => {
   let postElements = props.posts.map(post => <Post text={post.text} likes={post.likes} />)
   let addPostTextarea = React.createRef();
 
-  let addPost = () =>{
+  let addPost = () => {
     props.addPost();
     addPostTextarea.current.value = '';
-  } 
-  
+  }
+
   let onPostChange = () => {
     let newPostText = addPostTextarea.current.value;
     props.updateNewPostText(newPostText);
   }
 
   return (
-  <div>
+    <div>
       <div>
         <div>
           <textarea ref={addPostTextarea} onChange={onPostChange}></textarea>
@@ -28,7 +28,7 @@ const Posts = (props) => {
       </div>
       <h3>My posts</h3>
       <div className={css.paddingTop10}>
-        { postElements}
+        {postElements}
       </div>
     </div>
   )
