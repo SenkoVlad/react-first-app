@@ -9,7 +9,7 @@ import { Route } from 'react-router-dom'
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import UsersContainer from './components/Users/UsersContainer';
 
-const App = (props) => {
+const App = () => {
   return (
       <div className='app-wrapper'>
         <Header />
@@ -25,5 +25,4 @@ const App = (props) => {
       </div>
   );
 }
-
 export default App;

@@ -32,7 +32,10 @@ let store = {
             ],
             newPostText: ''
         },
-        sidebarPage: {}
+        sidebarPage: {},
+        usersPage : {
+            users : []
+        }
     },
     _invokeSubcribeCallbback: () => { },
     setState(state) {
