@@ -22,7 +22,7 @@ let initialState = {
 const dialogReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_MESSAGE:
-            if (state.newMessageText != '') {
+            if (state.newMessageText !== '') {
                 let newMessage = {
                     id: getMaxMessageId(state) + 1,
                     text: state.newMessageText
