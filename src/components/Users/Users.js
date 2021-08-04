@@ -3,18 +3,20 @@ import * as axios from 'axios'
 import React from 'react';
 
 class Users extends React.Component {
-    constructor(props) {
-        super(props);
 
+    componentDidMount() {
         this.getUsers();
     }
+
     getUsers = () => {
-        axios.get("https://localhost:5001/users", {
+        debugger;
+        axios.get(`https://localhost:5001/users?page=${this.props.page}&count=${this.props.count}`, {
             headers: { "Access-Control-Allow-Origin": "*" }
         }).then(response => {
-            this.props.setUsers(response.data.data);
+            this.props.setUsers(response.data.result.items);
         });
     }
+
     render() {
         return (
             <div>

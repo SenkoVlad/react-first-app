@@ -4,7 +4,10 @@ import Users from './Users';
 
 const mapStateToProps = (state) => {
     return {
-        users: state.usersPage.users
+        users: state.usersPage.users,
+        page : state.usersPage.page,
+        totalPage : state.usersPage.totalPage,
+        count : state.usersPage.count
     }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -21,5 +24,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(Users);
-
 export default UsersContainer

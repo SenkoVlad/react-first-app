@@ -2,7 +2,10 @@ import { UNFOLLOW_USER, FOLLOW_USER, SET_USERS } from './constants'
 
 let initialState = {
     users: [
-    ]
+    ],
+    page : 1,
+    totalPage : 0,
+    count : 20
 }
 const usersReducer = (state = initialState, action) => {
     switch (action.type) {
