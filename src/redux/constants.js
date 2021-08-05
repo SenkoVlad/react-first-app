@@ -8,5 +8,5 @@ export const UPDATE_MESSAGE_TEXT = 'update-new-message-text';
 export const FOLLOW_USER = 'follow-user';
 export const UNFOLLOW_USER = 'unfollow-user';
 export const SET_USERS = 'set-users';
-
-
+export const SET_USERS_TOTAL_COUNT = 'set-users-total-count';
+export const SET_USERS_CURRENT_PAGE = 'set-users-current-page';

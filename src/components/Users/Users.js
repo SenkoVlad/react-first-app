@@ -3,23 +3,40 @@ import * as axios from 'axios'
 import React from 'react';
 
 class Users extends React.Component {
-
     componentDidMount() {
-        this.getUsers();
+        this.getUsers(this.props.page);
     }
 
-    getUsers = () => {
-        debugger;
-        axios.get(`https://localhost:5001/users?page=${this.props.page}&count=${this.props.count}`, {
+    getUsers = (page) => {
+        debugger;  
+        axios.get(`https://localhost:5001/users?page=${page}&count=${this.props.count}`, {
             headers: { "Access-Control-Allow-Origin": "*" }
         }).then(response => {
             this.props.setUsers(response.data.result.items);
+            this.props.setTotalCount(response.data.result.totalCount);
         });
     }
 
+    //see a difference
+    setCurrentPage = (page) => {
+        this.props.setCurrentPage(page);
+        this.getUsers(page);
+    }
+
     render() {
+        let pageCount = Math.ceil(this.props.totalCount / this.props.count);
+        let pages = [];
+        for (let i = 1; i <= pageCount; i++) {
+            pages.push(i);
+        }
+
         return (
             <div>
+                <div>
+                    {pages.map(page => {
+                        return <span className={page === this.props.page ? css.currentPage : ''} onClick={() => this.setCurrentPage(page)}>{page}</span>
+                    })}
+                </div>
                 {
                     this.props.users.map(u =>
                         <div key={u.id}>
