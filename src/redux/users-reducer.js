@@ -1,11 +1,12 @@
-import { UNFOLLOW_USER, FOLLOW_USER, SET_USERS, SET_USERS_TOTAL_COUNT, SET_USERS_CURRENT_PAGE } from './constants'
+import { UNFOLLOW_USER, FOLLOW_USER, SET_USERS, SET_USERS_TOTAL_COUNT, SET_USERS_CURRENT_PAGE, SET_LOADING_GIF_PAGE } from './constants'
 
 let initialState = {
     users: [
     ],
-    page : 1,
-    totalCount : 0,
-    count : 10
+    currentPage : 1,
+    totalPageCount : 0,
+    pageSize : 10,
+    isLoading : false
 }
 const usersReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -44,13 +45,19 @@ const usersReducer = (state = initialState, action) => {
         case SET_USERS_TOTAL_COUNT: {
             return {
                 ...state,
-                totalCount: action.usersTotalCount
+                totalPageCount: action.usersTotalCount
             }
         }
         case SET_USERS_CURRENT_PAGE: {
             return {
                 ...state,
-                page: action.currentPage
+                currentPage: action.currentPage
+            }
+        }
+        case SET_LOADING_GIF_PAGE: {
+            return {
+                ...state,
+                isLoading: action.isLoading
             }
         }
         default:
@@ -85,6 +92,12 @@ export const setUsersCurrentPageActionCreater = (page) => {
     return {
         type: SET_USERS_CURRENT_PAGE,
         currentPage: page
+    }
+}
+export const setLoadingGifActionCreater = (flag) => {
+    return {
+        type: SET_LOADING_GIF_PAGE,
+        isLoading: flag
     }
 }
 

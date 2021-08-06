@@ -1,8 +1,9 @@
 import css from './Users.module.css';
 import React from 'react';
+import avatar from '../../www/images/avatar.png'
 
 let Users = (props) => {
-    let pageCount = Math.ceil(props.totalCount / props.count);
+    let pageCount = Math.ceil(props.totalPageCount / props.pageSize);
     let pages = [];
 
     for (let i = 1; i <= pageCount; i++) {
@@ -13,14 +14,14 @@ let Users = (props) => {
         <div>
             <div>
                 {pages.map(page => {
-                    return <span className={page === props.page ? css.currentPage : ''} onClick={() => props.setCurrentPage(page)}>{page}</span>
+                    return <span className={page === props.currentPage ? css.currentPage : ''} onClick={() => props.setCurrentPage(page)}>{page}</span>
                 })}
             </div>
             {
                 props.users.map(u =>
                     <div key={u.id}>
                         <div>
-                            <img src={u.photoUrl === '' ? 'https://www.pngfind.com/pngs/m/292-2924858_user-icon-business-man-flat-png-transparent-png.png' : u.photoUrl}
+                            <img src={u.photoUrl === '' ? avatar : u.photoUrl}
                                 className={css.userPhoto} />
                         </div>
                         <div>{u.name}</div>

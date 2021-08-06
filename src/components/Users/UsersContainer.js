@@ -1,17 +1,20 @@
 import { connect } from 'react-redux';
-import { setUsersActionCreater, followUserActionCreater, unfollowUserActionCreater, setUsersTotalCountActionCreater, setUsersCurrentPageActionCreater } from '../../redux/users-reducer'
+import { setUsersActionCreater, followUserActionCreater, unfollowUserActionCreater, setUsersTotalCountActionCreater, setUsersCurrentPageActionCreater, setLoadingGifActionCreater } from '../../redux/users-reducer'
 import * as axios from 'axios'
 import React from 'react';
 import Users from './Users';
+import Preloader from '../Common/Preloader/Preloader';
 
 class UsersContainer extends React.Component {
     componentDidMount() {
-        this.getUsers(this.props.page);
+        this.getUsers(this.props.currentPage);
     }
     getUsers = (page) => {
-        axios.get(`https://localhost:5001/users?page=${page}&count=${this.props.count}`, {
+        this.props.setLoadingGif(true);
+        axios.get(`https://localhost:5001/users?page=${page}&count=${this.props.pageSize}`, {
             headers: { "Access-Control-Allow-Origin": "*" }
         }).then(response => {
+            this.props.setLoadingGif(false);
             this.props.setUsers(response.data.result.items);
             this.props.setTotalCount(response.data.result.totalCount);
         });
@@ -20,24 +23,29 @@ class UsersContainer extends React.Component {
         this.props.setCurrentPage(page);
         this.getUsers(page);
     }
-    render() {
-        return <Users
-            totalCount={this.props.totalCount}
-            count={this.props.count}
-            page={this.props.page}
-            unfollowUser={this.props.unfollowUser}
-            followUser={this.props.followUser} 
-            setCurrentPage={this.setCurrentPage}
-            users={this.props.users}/>
+    render() {        
+        return( 
+        <>
+            {this.props.isLoading ? <Preloader/> : <></> } 
+            <Users
+                totalPageCount={this.props.totalPageCount}
+                pageSize={this.props.pageSize}
+                currentPage={this.props.currentPage}
+                unfollowUser={this.props.unfollowUser}
+                followUser={this.props.followUser} 
+                setCurrentPage={this.setCurrentPage}
+                users={this.props.users}/>
+        </>);
     }
 }
 
 const mapStateToProps = (state) => {
     return {
         users: state.usersPage.users,
-        page: state.usersPage.page,
-        totalCount: state.usersPage.totalCount,
-        count: state.usersPage.count
+        currentPage: state.usersPage.currentPage,
+        totalPageCount: state.usersPage.totalPageCount,
+        pageSize: state.usersPage.pageSize,
+        isLoading: state.usersPage.isLoading
     }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -56,6 +64,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         setCurrentPage: (page) => {
             dispatch(setUsersCurrentPageActionCreater(page));
+        },
+        setLoadingGif: (flag) => {
+            dispatch(setLoadingGifActionCreater(flag));
         }
     }
 }
