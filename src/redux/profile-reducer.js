@@ -1,4 +1,4 @@
-import { ADD_POST, UPDATE_POST_TEXT } from './constants'
+import { ADD_POST, UPDATE_POST_TEXT, SET_PROFILE_INFO, SET_LOADING_GIF_PAGE } from './constants'
 
 let initialState = {
     posts: [
@@ -7,6 +7,8 @@ let initialState = {
         { id: 3, text: "The third post", likes: "3" },
         { id: 4, text: "The fourth post", likes: "7" },
     ],
+    profileInfo : {},
+    isLoading : true,
     newPostText: ''
 }
 
@@ -31,6 +33,18 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 newPostText: action.text
             }
+        case SET_PROFILE_INFO: {
+            return {
+                ...state,
+                profileInfo : action.profileInfo
+            }
+        }
+        case SET_LOADING_GIF_PAGE: {
+            return {
+                ...state,
+                isLoading: action.isLoading
+            }
+        }
         default:
             return { ...state };
     }
@@ -50,6 +64,18 @@ export const updateNewPostTextActionCreater = (newText) => {
     return {
         type: UPDATE_POST_TEXT,
         text: newText
+    }
+}
+export const setUsersProfile = (profileInfo) => {
+    return {
+        type : SET_PROFILE_INFO,
+        profileInfo : profileInfo
+    }
+}
+export const setLoadingGif = (flag) => {
+    return {
+        type: SET_LOADING_GIF_PAGE,
+        isLoading: flag
     }
 }
 

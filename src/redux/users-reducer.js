@@ -64,37 +64,37 @@ const usersReducer = (state = initialState, action) => {
             return { ...state };
     }
 }
-export const followUserActionCreater = (userId) => {
+export const followUser = (userId) => {
     return {
         type: FOLLOW_USER,
         userId: userId
     }
 }
-export const unfollowUserActionCreater = (userId) => {
+export const unfollowUser = (userId) => {
     return {
         type: UNFOLLOW_USER,
         userId: userId
     }
 }
-export const setUsersActionCreater = (users) => {
+export const setUsers = (users) => {
     return {
         type: SET_USERS,
         users: users
     }
 }
-export const setUsersTotalCountActionCreater = (count) => {
+export const setUsersTotalCount = (count) => {
     return {
         type: SET_USERS_TOTAL_COUNT,
         usersTotalCount: count
     }
 }
-export const setUsersCurrentPageActionCreater = (page) => {
+export const setUsersCurrentPage = (page) => {
     return {
         type: SET_USERS_CURRENT_PAGE,
         currentPage: page
     }
 }
-export const setLoadingGifActionCreater = (flag) => {
+export const setLoadingGif = (flag) => {
     return {
         type: SET_LOADING_GIF_PAGE,
         isLoading: flag
