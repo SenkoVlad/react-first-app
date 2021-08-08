@@ -14,13 +14,12 @@ class UsersContainer extends React.Component {
     }
     getUsers = (page) => {
         this.props.setLoadingGif(true);
-        axios.get(`https://localhost:5001/users?page=${page}&count=${this.props.pageSize}`, {
-            headers: { "Access-Control-Allow-Origin": "*" }
-        }).then(response => {
-            this.props.setLoadingGif(false);
-            this.props.setUsers(response.data.result.items);
-            this.props.setUsersTotalCount(response.data.result.totalCount);
-        });
+        axios.get(`https://localhost:5001/users?page=${page}&count=${this.props.pageSize}`)
+            .then(response => {
+                this.props.setLoadingGif(false);
+                this.props.setUsers(response.data.result.items);
+                this.props.setUsersTotalCount(response.data.result.totalCount);
+            });
     }
     setCurrentPage = (page) => {
         this.props.setUsersCurrentPage(page);

@@ -12,3 +12,4 @@ export const SET_USERS = 'set-users';
 export const SET_USERS_TOTAL_COUNT = 'set-users-total-count';
 export const SET_USERS_CURRENT_PAGE = 'set-users-current-page';
 export const SET_LOADING_GIF_PAGE = 'set-loading-gif';
+export const SET_LOGIN_DATA = 'set-login-data';

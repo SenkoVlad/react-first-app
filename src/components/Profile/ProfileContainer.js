@@ -4,6 +4,7 @@ import Profile from './Profile'
 import { setUsersProfile, setLoadingGif } from '../../redux/profile-reducer'
 import * as axios from 'axios'
 import Preloader from '../Common/Preloader/Preloader';
+import { withRouter } from 'react-router-dom';
 
 
 class ProfileContainer extends React.Component {
@@ -20,10 +21,11 @@ class ProfileContainer extends React.Component {
   }
 
   componentDidMount() {
-    this.getUserProfile('068376af-eeb1-449f-9286-2aa334a6cfb3')
+    let userId = this.props.match.params.userId ? this.props.match.params.userId : '05c4064d-038f-4093-b200-8da640bc220f'; 
+    this.getUserProfile(userId);
   }
   componentWillUnmount() {
-    this.props.setUsersProfile({})
+    this.props.setUsersProfile({});
   }
 
   getUserProfile = (userId) => {
@@ -43,8 +45,7 @@ let mapStateToProps = (state) => {
   }
 }
 
-
 export default connect(mapStateToProps, {
   setUsersProfile,
   setLoadingGif
-})(ProfileContainer);
+})(withRouter(ProfileContainer));
