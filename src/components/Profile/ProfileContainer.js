@@ -21,7 +21,7 @@ class ProfileContainer extends React.Component {
   }
 
   componentDidMount() {
-    let userId = this.props.match.params.userId ? this.props.match.params.userId : '05c4064d-038f-4093-b200-8da640bc220f'; 
+    let userId = this.props.match.params.userId ? this.props.match.params.userId : '05c4064d-038f-4093-b200-8da640bc220f';
     this.getUserProfile(userId);
   }
   componentWillUnmount() {
