@@ -6,9 +6,10 @@ import * as axios from 'axios'
 
 class LoginContainer extends React.Component {
     render() {
+        debugger;
         return (
         <>
-            {this.props.isLogin ? <Login {...this.props} login={this.login} /> : <div>You are authorized</div>} 
+            {!this.props.isLogin ? <Login {...this.props} login={this.login} /> : <div>You are authorized</div>} 
         </>
         );
     }
@@ -30,7 +31,8 @@ class LoginContainer extends React.Component {
 let mapStateToProps = (state) => {
     return {
         inputLogin: state.auth.inputLogin,
-        inputPassword: state.auth.inputPassword
+        inputPassword: state.auth.inputPassword,
+        isLogin: state.auth.isLogin
     };
 }
 

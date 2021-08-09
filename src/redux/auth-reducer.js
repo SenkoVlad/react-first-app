@@ -1,4 +1,4 @@
-import { SET_LOGIN_DATA, SET_NEW_LOGIN_TEXT, SET_NEW_PASSWORD_TEXT } from './constants'
+import { SET_LOGIN_DATA, SET_NEW_LOGIN_TEXT, SET_NEW_PASSWORD_TEXT, SET_LOGOUT } from './constants'
 
 let initialState = {
     userId: null,
@@ -20,12 +20,17 @@ const authReducer = (state = initialState, action) => {
         case SET_NEW_LOGIN_TEXT:
             return {
                 ...state,
-                inputLogin : action.data
+                inputLogin: action.data
             }
         case SET_NEW_PASSWORD_TEXT:
             return {
                 ...state,
-                inputPassword : action.data
+                inputPassword: action.data
+            }
+        case SET_LOGOUT:
+            return {
+                ...state,
+                isLogin: action.data
             }
         default:
             return {
@@ -37,6 +42,12 @@ export const setAuthDataActionCreater = (email, login, userId) => {
     return {
         type: SET_LOGIN_DATA,
         data: { userId, login, email }
+    }
+}
+export const setLogoutActionCreater = () => {
+    return {
+        type: SET_LOGOUT,
+        data: false
     }
 }
 export const setInputLoginActionCreate = (login) => {

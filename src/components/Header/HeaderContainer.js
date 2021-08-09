@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Header from './Header';
-import {setAuthDataActionCreater} from '../../redux/auth-reducer'
+import {setAuthDataActionCreater, setLogoutActionCreater} from '../../redux/auth-reducer'
 import * as axios from 'axios'
 
 class HeaderContainer extends React.Component {
@@ -19,6 +19,9 @@ class HeaderContainer extends React.Component {
                 let { email, login, userId } = response.data.result;
                 this.props.setAuthDataActionCreater(email, login, userId);
             }
+            else {
+                this.props.setLogoutActionCreater();
+            }
         });
     }
 }
@@ -30,5 +33,5 @@ let mapStateToProps = (state) => {
     };
 }
 
-export default connect(mapStateToProps, { setAuthDataActionCreater })
+export default connect(mapStateToProps, { setAuthDataActionCreater, setLogoutActionCreater })
     (HeaderContainer);
