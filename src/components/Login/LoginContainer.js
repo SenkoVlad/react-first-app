@@ -6,7 +6,6 @@ import * as axios from 'axios'
 
 class LoginContainer extends React.Component {
     render() {
-        debugger;
         return (
         <>
             {!this.props.isLogin ? <Login {...this.props} login={this.login} /> : <div>You are authorized</div>} 
