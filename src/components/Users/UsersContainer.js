@@ -4,44 +4,39 @@ import * as axios from 'axios'
 import React from 'react';
 import Users from './Users';
 import Preloader from '../Common/Preloader/Preloader';
+import { userApi } from '../Api/userApi'
 
 class UsersContainer extends React.Component {
     componentDidMount() {
-        this.getUsers(this.props.currentPage);
+        this.props.setLoadingGif(true);
+        userApi.getUsers(this.props.currentPage, this.props.pageSize)
+            .then(data => {
+                this.props.setLoadingGif(false);
+                if (data.resultCode == 0) {
+                    this.props.setUsers(data.result.items);
+                    this.props.setUsersTotalCount(data.result.totalCount);
+                }
+            });
     }
     componentWillUnmount() {
         this.props.setUsers([]);
     }
-    getUsers = (page) => {
-        this.props.setLoadingGif(true);
-        axios.get(`https://localhost:5001/users?page=${page}&count=${this.props.pageSize}`)
-            .then(response => {
-                this.props.setLoadingGif(false);
-                if(response.data.resultCode == 0) {
-                    this.props.setUsers(response.data.result.items);
-                    this.props.setUsersTotalCount(response.data.result.totalCount);                    
+
+    followUser = (userId) => {
+        userApi.followUser(userId)
+            .then(data => {
+                if (data.resultCode == 0) {
+                    this.props.followUser(userId);
                 }
             });
     }
-    followUser = (userId) => {
-        axios.post(`https://localhost:5001/users/follow/${userId}`, {}, {
-            withCredentials : true
-        })
-        .then(response => {
-            if(response.data.resultCode == 0) {
-                this.props.followUser(userId);
-            }
-        });
-    }
     unfollowUser = (userId) => {
-        axios.post(`https://localhost:5001/users/unfollow/${userId}`, {}, {
-            withCredentials : true
-        })
-        .then(response => {
-            if(response.data.resultCode == 0) {
-                this.props.unfollowUser(userId);
-            }
-        });
+        userApi.unfollowUser(userId)
+            .then(data => {
+                if (data.resultCode == 0) {
+                    this.props.unfollowUser(userId);
+                }
+            });
     }
     setCurrentPage = (page) => {
         this.props.setUsersCurrentPage(page);
