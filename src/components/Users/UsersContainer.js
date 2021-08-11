@@ -17,9 +17,31 @@ class UsersContainer extends React.Component {
         axios.get(`https://localhost:5001/users?page=${page}&count=${this.props.pageSize}`)
             .then(response => {
                 this.props.setLoadingGif(false);
-                this.props.setUsers(response.data.result.items);
-                this.props.setUsersTotalCount(response.data.result.totalCount);
+                if(response.data.resultCode == 0) {
+                    this.props.setUsers(response.data.result.items);
+                    this.props.setUsersTotalCount(response.data.result.totalCount);                    
+                }
             });
+    }
+    followUser = (userId) => {
+        axios.post(`https://localhost:5001/users/follow/${userId}`, {}, {
+            withCredentials : true
+        })
+        .then(response => {
+            if(response.data.resultCode == 0) {
+                this.props.followUser(userId);
+            }
+        });
+    }
+    unfollowUser = (userId) => {
+        axios.post(`https://localhost:5001/users/unfollow/${userId}`, {}, {
+            withCredentials : true
+        })
+        .then(response => {
+            if(response.data.resultCode == 0) {
+                this.props.unfollowUser(userId);
+            }
+        });
     }
     setCurrentPage = (page) => {
         this.props.setUsersCurrentPage(page);
@@ -35,8 +57,8 @@ class UsersContainer extends React.Component {
                             totalPageCount={this.props.totalPageCount}
                             pageSize={this.props.pageSize}
                             currentPage={this.props.currentPage}
-                            unfollowUser={this.props.unfollowUser}
-                            followUser={this.props.followUser}
+                            unfollowUser={this.unfollowUser}
+                            followUser={this.followUser}
                             setCurrentPage={this.setCurrentPage}
                             users={this.props.users} />
                 }
