@@ -40,7 +40,15 @@ class UsersContainer extends React.Component {
     }
     setCurrentPage = (page) => {
         this.props.setUsersCurrentPage(page);
-        this.getUsers(page);
+
+        userApi.getUsers(page, this.props.pageSize)
+        .then(data => {
+            this.props.setLoadingGif(false);
+            if (data.resultCode == 0) {
+                this.props.setUsers(data.result.items);
+                this.props.setUsersTotalCount(data.result.totalCount);
+            }
+        });
     }
     render() {
         return (
