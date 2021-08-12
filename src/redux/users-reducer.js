@@ -1,12 +1,13 @@
-import { UNFOLLOW_USER, FOLLOW_USER, SET_USERS, SET_USERS_TOTAL_COUNT, SET_USERS_CURRENT_PAGE, SET_LOADING_GIF_PAGE } from './constants'
+import { UNFOLLOW_USER, FOLLOW_USER, SET_USERS, SET_USERS_TOTAL_COUNT, SET_USERS_CURRENT_PAGE, SET_LOADING_GIF_PAGE, SET_FOLLOWING_PROCESS } from './constants'
 
 let initialState = {
     users: [
     ],
-    currentPage : 1,
-    totalPageCount : 0,
-    pageSize : 10,
-    isLoading : false
+    currentPage: 1,
+    totalPageCount: 0,
+    pageSize: 10,
+    isLoading: false,
+    followingUsersId: [],
 }
 const usersReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -41,7 +42,7 @@ const usersReducer = (state = initialState, action) => {
                 ...state,
                 users: [...action.users]
             }
-        } 
+        }
         case SET_USERS_TOTAL_COUNT: {
             return {
                 ...state,
@@ -60,45 +61,24 @@ const usersReducer = (state = initialState, action) => {
                 isLoading: action.isLoading
             }
         }
+        case SET_FOLLOWING_PROCESS: {
+            return {
+                ...state,
+                followingUsersId: action.isFollowing
+                    ? [...state.followingUsersId, action.userId]
+                    : state.followingUsersId.filter(id => id != action.userId)
+            }
+        }
         default:
             return { ...state };
     }
 }
-export const followUser = (userId) => {
-    return {
-        type: FOLLOW_USER,
-        userId: userId
-    }
-}
-export const unfollowUser = (userId) => {
-    return {
-        type: UNFOLLOW_USER,
-        userId: userId
-    }
-}
-export const setUsers = (users) => {
-    return {
-        type: SET_USERS,
-        users: users
-    }
-}
-export const setUsersTotalCount = (count) => {
-    return {
-        type: SET_USERS_TOTAL_COUNT,
-        usersTotalCount: count
-    }
-}
-export const setUsersCurrentPage = (page) => {
-    return {
-        type: SET_USERS_CURRENT_PAGE,
-        currentPage: page
-    }
-}
-export const setLoadingGif = (flag) => {
-    return {
-        type: SET_LOADING_GIF_PAGE,
-        isLoading: flag
-    }
-}
+export const followUser = (userId) => ({ type: FOLLOW_USER, userId: userId })
+export const unfollowUser = (userId) => ({ type: UNFOLLOW_USER, userId: userId })
+export const setUsers = (users) => ({ type: SET_USERS, users: users })
+export const setUsersTotalCount = (count) => ({ type: SET_USERS_TOTAL_COUNT, usersTotalCount: count })
+export const setUsersCurrentPage = (page) => ({ type: SET_USERS_CURRENT_PAGE, currentPage: page })
+export const setLoadingGif = (flag) => ({ type: SET_LOADING_GIF_PAGE, isLoading: flag })
+export const setFollowingProcess = (isFollowing, userId) => ({ type: SET_FOLLOWING_PROCESS, isFollowing, userId })
 
 export default usersReducer;

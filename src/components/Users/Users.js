@@ -32,8 +32,8 @@ let Users = (props) => {
                         <div>{u.location.country}</div>
                         <div>
                             {u.followed == 1 ?
-                                <button onClick={() => props.unfollowUser(u.id)}>unfollow</button> :
-                                <button onClick={() => props.followUser(u.id)}>follow</button>}
+                                <button disabled={props.followingUsersId.some(id => id === u.id)} onClick={() => props.unfollowUser(u.id)}>unfollow</button> :
+                                <button disabled={props.followingUsersId.some(id => id === u.id)} onClick={() => props.followUser(u.id)}>follow</button>}
                         </div>
                     </div>
                 )}
