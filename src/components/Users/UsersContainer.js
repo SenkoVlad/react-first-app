@@ -1,58 +1,18 @@
 import { connect } from 'react-redux';
-import { setUsers, followUser, unfollowUser, setUsersTotalCount, setUsersCurrentPage, setLoadingGif, setFollowingProcess } from '../../redux/users-reducer'
-import * as axios from 'axios'
+import {  followUser, unfollowUser, setFollowingProcess, getUsers, setUsers } from '../../redux/users-reducer'
 import React from 'react';
 import Users from './Users';
 import Preloader from '../Common/Preloader/Preloader';
-import { userApi } from '../Api/userApi'
 
 class UsersContainer extends React.Component {
     componentDidMount() {
-        this.props.setLoadingGif(true);
-        userApi.getUsers(this.props.currentPage, this.props.pageSize)
-            .then(data => {
-                this.props.setLoadingGif(false);
-                if (data.resultCode == 0) {
-                    this.props.setUsers(data.result.items);
-                    this.props.setUsersTotalCount(data.result.totalCount);
-                }
-            });
+        this.props.getUsers(this.props.currentPage, this.props.pageSize);
     }
     componentWillUnmount() {
         this.props.setUsers([]);
     }
-
-    followUser = (userId) => {
-        this.props.setFollowingProcess(true, userId);
-        userApi.followUser(userId)
-            .then(data => {
-                if (data.resultCode == 0) {
-                    this.props.followUser(userId);
-                }
-                this.props.setFollowingProcess(false, userId);
-            });
-    }
-    unfollowUser = (userId) => {
-        this.props.setFollowingProcess(true, userId);
-        userApi.unfollowUser(userId)
-            .then(data => {
-                if (data.resultCode == 0) {
-                    this.props.unfollowUser(userId);
-                }
-                this.props.setFollowingProcess(false, userId);
-            });
-    }
     setCurrentPage = (page) => {
-        this.props.setUsersCurrentPage(page);
-
-        userApi.getUsers(page, this.props.pageSize)
-            .then(data => {
-                this.props.setLoadingGif(false);
-                if (data.resultCode == 0) {
-                    this.props.setUsers(data.result.items);
-                    this.props.setUsersTotalCount(data.result.totalCount);
-                }
-            });
+        this.props.getUsers(page, this.props.pageSize, true);
     }
     render() {
         return (
@@ -64,12 +24,11 @@ class UsersContainer extends React.Component {
                             totalPageCount={this.props.totalPageCount}
                             pageSize={this.props.pageSize}
                             currentPage={this.props.currentPage}
-                            unfollowUser={this.unfollowUser}
-                            followUser={this.followUser}
+                            unfollowUser={this.props.unfollowUser}
+                            followUser={this.props.followUser}
                             setCurrentPage={this.setCurrentPage}
                             users={this.props.users}
-                            followingUsersId={this.props.followingUsersId}
-                            setFollowingProcess={this.props.setFollowingProcess} />
+                            followingUsersId={this.props.followingUsersId} />
                 }
             </>);
     }
@@ -89,9 +48,7 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
     followUser,
     unfollowUser,
-    setUsers,
-    setUsersTotalCount,
-    setUsersCurrentPage,
-    setLoadingGif,
-    setFollowingProcess
+    setFollowingProcess,
+    getUsers,
+    setUsers
 })(UsersContainer);
