@@ -1,3 +1,4 @@
+import { userApi } from '../components/Api/Api';
 import { ADD_POST, UPDATE_POST_TEXT, SET_PROFILE_INFO, SET_LOADING_GIF_PAGE } from './constants'
 
 let initialState = {
@@ -7,8 +8,8 @@ let initialState = {
         { id: 3, text: "The third post", likes: "3" },
         { id: 4, text: "The fourth post", likes: "7" },
     ],
-    profileInfo : {},
-    isLoading : true,
+    profileInfo: {},
+    isLoading: true,
     newPostText: ''
 }
 
@@ -36,7 +37,7 @@ const profileReducer = (state = initialState, action) => {
         case SET_PROFILE_INFO: {
             return {
                 ...state,
-                profileInfo : action.profileInfo
+                profileInfo: action.profileInfo
             }
         }
         case SET_LOADING_GIF_PAGE: {
@@ -55,27 +56,19 @@ const getMaxPostId = (state) => {
         state.posts[0].id);
 }
 
-export const newPostActionCreator = () => {
-    return {
-        type: ADD_POST
-    }
-}
-export const updateNewPostTextActionCreater = (newText) => {
-    return {
-        type: UPDATE_POST_TEXT,
-        text: newText
-    }
-}
-export const setUsersProfile = (profileInfo) => {
-    return {
-        type : SET_PROFILE_INFO,
-        profileInfo : profileInfo
-    }
-}
-export const setLoadingGif = (flag) => {
-    return {
-        type: SET_LOADING_GIF_PAGE,
-        isLoading: flag
+export const newPostActionCreator = () => ({ type: ADD_POST })
+export const updateNewPostTextActionCreater = (newText) => ({ type: UPDATE_POST_TEXT, text: newText })
+export const setUsersProfile = (profileInfo) => ({ type: SET_PROFILE_INFO, profileInfo: profileInfo })
+export const setLoadingGif = (flag) => ({ type: SET_LOADING_GIF_PAGE, isLoading: flag })
+
+export const getUserProfile = (userId) => {
+    return (dispatch) => {
+        dispatch(setLoadingGif(true));
+        userApi.getUserProfile(userId)
+            .then(response => {
+                dispatch(setLoadingGif(false));
+                dispatch(setUsersProfile(response.result));
+            });
     }
 }
 

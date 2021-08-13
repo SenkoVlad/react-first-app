@@ -50,16 +50,7 @@ const getMaxMessageId = (state) => {
         state.messages[0].id);
 }
 
-export const newMessageActionCreator = () => {
-    return {
-        type: ADD_MESSAGE
-    }
-}
-export const updateNewMessageTextActionCreater = (newText) => {
-    return {
-        type: UPDATE_MESSAGE_TEXT,
-        text: newText
-    }
-}
+export const newMessageActionCreator = () => ({ type: ADD_MESSAGE })
+export const updateNewMessageTextActionCreater = (newText) => ({ type: UPDATE_MESSAGE_TEXT, text: newText })
 
 export default dialogReducer;
