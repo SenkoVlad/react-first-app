@@ -1,29 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Login from './Login';
-import { setAuthDataActionCreater, setInputLoginActionCreate, setInputPasswordActionCreate } from '../../redux/auth-reducer'
-import * as axios from 'axios'
+import {  setInputLoginActionCreate, setInputPasswordActionCreate, login } from '../../redux/auth-reducer'
 
 class LoginContainer extends React.Component {
     render() {
         return (
         <>
-            {!this.props.isLogin ? <Login {...this.props} login={this.login} /> : <div>You are authorized</div>} 
+            {!this.props.isLogin ? <Login {...this.props} login={this.props.login} /> : <div>You are authorized</div>} 
         </>
         );
-    }
-    login(login, password) {
-        axios.post('https://localhost:5001/auth/login', {
-            login: login,
-            password: password,
-        }, {
-            withCredentials: true
-        }).then(response => {
-            if (response.data.resultCode === 0) {
-                let { email, login, userId } = response.data.result;
-                this.setAuthDataActionCreater(email, login, userId);
-            }
-        });
     }
 }
 
@@ -38,5 +24,5 @@ let mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
     setInputLoginActionCreate,
     setInputPasswordActionCreate,
-    setAuthDataActionCreater
+    login
 })(LoginContainer);

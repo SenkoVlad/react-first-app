@@ -1,5 +1,5 @@
 import { UNFOLLOW_USER, FOLLOW_USER, SET_USERS, SET_USERS_TOTAL_COUNT, SET_USERS_CURRENT_PAGE, SET_LOADING_GIF_PAGE, SET_FOLLOWING_PROCESS } from './constants'
-import { userApi } from '../components/Api/userApi'
+import { userApi } from '../components/Api/Api'
 
 let initialState = {
     users: [

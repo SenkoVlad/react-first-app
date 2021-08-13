@@ -1,28 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Header from './Header';
-import {setAuthDataActionCreater, setLogoutActionCreater} from '../../redux/auth-reducer'
-import * as axios from 'axios'
+import {getAuthState} from '../../redux/auth-reducer';
 
 class HeaderContainer extends React.Component {
     render() {
         return <Header {...this.props} />
     }
     componentDidMount() {
-        this.getLoginStatus();
-    }
-    getLoginStatus() {
-        axios.get('https://localhost:5001/auth/status', {
-            withCredentials : true
-        }).then(response => {
-            if (response.data.resultCode === 0) {
-                let { email, login, userId } = response.data.result;
-                this.props.setAuthDataActionCreater(email, login, userId);
-            }
-            else {
-                this.props.setLogoutActionCreater();
-            }
-        });
+        this.props.getAuthState();
     }
 }
 
@@ -33,5 +19,5 @@ let mapStateToProps = (state) => {
     };
 }
 
-export default connect(mapStateToProps, { setAuthDataActionCreater, setLogoutActionCreater })
+export default connect(mapStateToProps, { getAuthState })
     (HeaderContainer);
