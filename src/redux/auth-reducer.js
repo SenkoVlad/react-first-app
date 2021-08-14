@@ -1,5 +1,5 @@
 import { SET_LOGIN_DATA, SET_NEW_LOGIN_TEXT, SET_NEW_PASSWORD_TEXT, SET_LOGOUT } from './constants'
-import {authApi} from '../components/Api/Api';
+import {authApi} from '../Api/Api';
 
 let initialState = {
     userId: null,

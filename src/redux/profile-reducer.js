@@ -1,4 +1,4 @@
-import { userApi } from '../components/Api/Api';
+import { userApi } from '../Api/Api';
 import { ADD_POST, UPDATE_POST_TEXT, SET_PROFILE_INFO, SET_LOADING_GIF_PAGE } from './constants'
 
 let initialState = {
@@ -9,7 +9,7 @@ let initialState = {
         { id: 4, text: "The fourth post", likes: "7" },
     ],
     profileInfo: {},
-    isLoading: true,
+    isLoading: false,
     newPostText: ''
 }
 
