@@ -19,7 +19,7 @@ export const userApi = {
             .then(response => response.data);
     },
     getUserProfile(userId) {
-        return axiosInstance.get(`users/profile/${userId}`).then(response => response.data);
+        return axiosInstance.get(`users/${userId}`).then(response => response.data);
     }
 }
 export const authApi = {
