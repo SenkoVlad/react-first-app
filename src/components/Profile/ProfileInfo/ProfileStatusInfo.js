@@ -2,27 +2,42 @@ import React from 'react';
 
 class ProfileStatusInfo extends React.Component {
     state = {
-        editMode: true
+        editMode: true,
+        status: this.props.status
     }
     changeEditMode(flag) {
         this.setState({
-            editMode : flag
+            editMode: flag,
+        });
+        if (flag) {
+            this.props.updateUserStatus(this.state.status);
+        }
+    }
+    componentDidMount() {
+        this.setState({
+            status: this.props.status
+        });
+    }
+
+    updateLocalStatus = (e) => {
+        this.setState({
+            status: e.currentTarget.value
         });
     }
     render() {
         return (
-        <>
-            {this.state.editMode
-                ?
-                <div>
-                    <span onDoubleClick={() => this.changeEditMode(false)}>{this.props.info}</span>
-                </div>
-                :
-                <div>
-                    <input autoFocus={true} onChange={() => alert('fewf')} onBlur={() => this.changeEditMode(true)} value={this.props.info}/>
-                </div>
-            }
-        </>
+            <>
+                {this.state.editMode
+                    ?
+                    <div>
+                        <span onDoubleClick={() => this.changeEditMode(false)}>{this.props.status}</span>
+                    </div>
+                    :
+                    <div>
+                        <input autoFocus={true} onChange={this.updateLocalStatus} onBlur={() => this.changeEditMode(true)} value={this.state.status} />
+                    </div>
+                }
+            </>
         );
     }
 }

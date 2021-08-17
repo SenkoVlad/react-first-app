@@ -1,7 +1,7 @@
 import css from './ProfileInfo.module.css'
 import avatar from '../../../www/images/avatar.png'
-import ProfileStatusInfo
- from './ProfileStatusInfo';
+import ProfileStatusInfo from './ProfileStatusInfo';
+
 const ProfileInfo = (props) => {
   return (
     <div className={css.whiteText}>
@@ -12,7 +12,7 @@ const ProfileInfo = (props) => {
         <img src={props.profileInfo.photoUrl === '' ? avatar : props.profileInfo.photoUrl} className={css.userPhoto} />
       </div>
 
-      <ProfileStatusInfo info={props.profileInfo.info}/>
+      <ProfileStatusInfo status={props.profileInfo.status} updateUserStatus={props.updateUserStatus}/>
 
       <div>
         {props.profileInfo.isLookingForAJob === true ? 'Job resume: ' + props.profileInfo.resumeText : ''}

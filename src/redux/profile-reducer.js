@@ -1,5 +1,5 @@
 import { userApi } from '../Api/Api';
-import { ADD_POST, UPDATE_POST_TEXT, SET_PROFILE_INFO, SET_LOADING_GIF_PAGE } from './constants'
+import { ADD_POST, UPDATE_POST_TEXT, SET_PROFILE_INFO, SET_LOADING_GIF_PAGE, UPDATE_USER_STATUS } from './constants'
 
 let initialState = {
     posts: [
@@ -46,6 +46,13 @@ const profileReducer = (state = initialState, action) => {
                 isLoading: action.isLoading
             }
         }
+        case UPDATE_USER_STATUS: {
+            return {
+                ...state,
+                profileInfo : { ...state.profileInfo, 
+                                status : action.status }
+            }
+        }
         default:
             return { ...state };
     }
@@ -56,10 +63,11 @@ const getMaxPostId = (state) => {
         state.posts[0].id);
 }
 
-export const newPostActionCreator = () => ({ type: ADD_POST })
-export const updateNewPostTextActionCreater = (newText) => ({ type: UPDATE_POST_TEXT, text: newText })
-export const setUsersProfile = (profileInfo) => ({ type: SET_PROFILE_INFO, profileInfo: profileInfo })
-export const setLoadingGif = (flag) => ({ type: SET_LOADING_GIF_PAGE, isLoading: flag })
+export const newPostActionCreator = () => ({ type: ADD_POST });
+export const updateNewPostTextActionCreater = (newText) => ({ type: UPDATE_POST_TEXT, text: newText });
+export const setUsersProfile = (profileInfo) => ({ type: SET_PROFILE_INFO, profileInfo: profileInfo });
+export const setLoadingGif = (flag) => ({ type: SET_LOADING_GIF_PAGE, isLoading: flag });
+export const updateUserStatusActionCreater = (status) => ( {type : UPDATE_USER_STATUS, status : status});
 
 export const getUserProfile = (userId) => {
     return (dispatch) => {
@@ -69,6 +77,17 @@ export const getUserProfile = (userId) => {
                 dispatch(setLoadingGif(false));
                 dispatch(setUsersProfile(response.result));
             });
+    }
+}
+
+export const updateUserStatus = (status) => {
+    return (dispatch) => {
+        userApi.updateUserStatus(status)
+            .then(response => {
+                if(response.resultCode === 0) {
+                    dispatch(updateUserStatusActionCreater(status));
+                }
+            })
     }
 }
 

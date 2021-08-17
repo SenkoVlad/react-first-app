@@ -20,6 +20,9 @@ export const userApi = {
     },
     getUserProfile(userId) {
         return axiosInstance.get(`users/${userId}`).then(response => response.data);
+    },
+    updateUserStatus(status) {
+        return axiosInstance.put('users/updatestatus', {status : status}).then(response => response.data);
     }
 }
 export const authApi = {

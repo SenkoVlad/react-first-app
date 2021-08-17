@@ -17,5 +17,5 @@ export const SET_NEW_LOGIN_TEXT = 'set-login-input-data';
 export const SET_NEW_PASSWORD_TEXT = 'set-password-input-data';
 export const SET_LOGOUT = 'set-logout';
 export const SET_FOLLOWING_PROCESS = 'set-following_process';
-
+export const UPDATE_USER_STATUS = 'update-user-status';
 
