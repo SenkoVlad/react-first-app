@@ -19,7 +19,7 @@ class ProfileStatusInfo extends React.Component {
                 </div>
                 :
                 <div>
-                    <input autoFocus={true} onBlur={() => this.changeEditMode(true)} value={this.props.info}/>
+                    <input autoFocus={true} onChange={() => alert('fewf')} onBlur={() => this.changeEditMode(true)} value={this.props.info}/>
                 </div>
             }
         </>

@@ -22,6 +22,7 @@ class ProfileContainer extends React.Component {
   }
 
   componentDidMount() {
+    debugger;
     let userId = this.props.match.params.userId ? this.props.match.params.userId : this.props.userId;
     if(userId)
       this.props.getUserProfile(userId);
