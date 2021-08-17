@@ -13,10 +13,12 @@ class ProfileStatusInfo extends React.Component {
             this.props.updateUserStatus(this.state.status);
         }
     }
-    componentDidMount() {
-        this.setState({
-            status: this.props.status
-        });
+    componentDidUpdate(prevProps, prevState) {
+        if (this.props.status && (this.props.status !== prevProps.status)) {
+            this.setState({
+                status: this.props.status
+            });
+        }
     }
 
     updateLocalStatus = (e) => {
@@ -30,7 +32,7 @@ class ProfileStatusInfo extends React.Component {
                 {this.state.editMode
                     ?
                     <div>
-                        <span onDoubleClick={() => this.changeEditMode(false)}>{this.props.status}</span>
+                        <span onDoubleClick={() => this.changeEditMode(false)}>{this.state.status ? this.state.status : '---------'}</span>
                     </div>
                     :
                     <div>
