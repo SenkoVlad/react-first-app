@@ -1,4 +1,4 @@
-import { ADD_MESSAGE, UPDATE_MESSAGE_TEXT } from './constants'
+import { ADD_MESSAGE } from './constants'
 
 let initialState = {
     dialogs: [
@@ -15,28 +15,21 @@ let initialState = {
         { id: 3, text: 'Yo' },
         { id: 4, text: 'Yo' },
         { id: 5, text: 'Yo' }
-    ],
-    newMessageText: ''
+    ]
 }
 
 const dialogReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_MESSAGE:
-            if (state.newMessageText !== '') {
+            if (action.text !== '') {
                 let newMessage = {
                     id: getMaxMessageId(state) + 1,
-                    text: state.newMessageText
+                    text: action.text
                 }
                 return {
                     ...state,
-                    messages: [...state.messages, newMessage],
-                    newMessageText: ''
+                    messages: [...state.messages, newMessage]
                 }
-            }
-        case UPDATE_MESSAGE_TEXT:
-            return {
-                ...state,
-                newMessageText: action.text
             }
         default:
             return {
@@ -50,7 +43,6 @@ const getMaxMessageId = (state) => {
         state.messages[0].id);
 }
 
-export const newMessageActionCreator = () => ({ type: ADD_MESSAGE })
-export const updateNewMessageTextActionCreater = (newText) => ({ type: UPDATE_MESSAGE_TEXT, text: newText })
+export const newMessageActionCreator = (newMessageText) => ({ type: ADD_MESSAGE, text: newMessageText})
 
 export default dialogReducer;

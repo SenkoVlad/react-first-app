@@ -5,16 +5,12 @@ import Posts from './Posts'
 const mapStateToProps = (state) => {
   return {
     posts: state.profilePage.posts,
-    newPostText : state.profilePage.newPostText
   }
 }
 const mapDispatchToProps = (dispatch) => {
   return {
-    addPost: () => {
-      dispatch(newPostActionCreator());
-    },
-    updateNewPostText: (newPostText) => {
-      dispatch(updateNewPostTextActionCreater(newPostText));
+    addPost: (newposttext) => {
+      dispatch(newPostActionCreator(newposttext));
     }
   }
 }

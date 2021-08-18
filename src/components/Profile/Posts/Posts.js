@@ -1,30 +1,37 @@
 import css from './Posts.module.css'
 import Post from './Post/Post'
 import React from 'react'
+import { Field, reduxForm } from 'redux-form'
+
+const PostForm = (props) => {
+  return (
+    <div>
+      <form onSubmit={props.handleSubmit}>
+        <div>
+          <Field name='newposttext' component='textarea' />
+        </div>
+        <div>
+          <button>Add post</button>
+        </div>
+      </form>
+    </div>
+  );
+}
+
+const ReduxPostForm = reduxForm({
+  form: 'post'
+})(PostForm);
 
 const Posts = (props) => {
-  let postElements = props.posts.map(post => <Post text={post.text} likes={post.likes} key={post.id}/>)
-  let addPostTextarea = React.createRef();
+  let postElements = props.posts.map(post => <Post text={post.text} likes={post.likes} key={post.id} />)
 
-  let addPost = () => {
-    props.addPost();
-    addPostTextarea.current.value = '';
+  let onSubmit = (formData) => {
+    props.addPost(formData.newposttext);
   }
-
-  let onPostChange = () => {
-    let newPostText = addPostTextarea.current.value;
-    props.updateNewPostText(newPostText);
-  }
-
   return (
     <div>
       <div>
-        <div>
-          <textarea ref={addPostTextarea} onChange={onPostChange} value={props.newPostText}></textarea>
-        </div>
-        <div>
-          <button onClick={addPost}>New post</button>
-        </div>
+        <ReduxPostForm onSubmit={onSubmit} />
       </div>
       <h3>My posts</h3>
       <div className={css.paddingTop10}>
