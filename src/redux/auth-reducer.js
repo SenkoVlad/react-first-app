@@ -5,8 +5,6 @@ let initialState = {
     userId: null,
     login: null,
     email: null,
-    inputLogin: null,
-    inputPassword: null,
     isLogin: false
 }
 

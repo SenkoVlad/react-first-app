@@ -1,37 +1,48 @@
 import React from 'react';
+import { Field, reduxForm } from 'redux-form';
 import css from "./Login.module.css";
 
-const Login = (props) => {
-    let inputLogin = React.createRef();
-    let inputPass = React.createRef();
-
-    let onLoginChanged = () => {
-        let loginText = inputLogin.current.value;
-        props.setInputLoginActionCreate(loginText);
-    }
-    let onPasswordChanged = () => {
-        let passwordText = inputPass.current.value;
-        props.setInputPasswordActionCreate(passwordText);
-    }
-    let login = () => {
-        props.login(props.inputLogin, props.inputPassword);
-    }
-
+const LoginForm = (props) => {
     return (
-        <div className={css.loginBlock}>
-            <div>
-                <label for="fname">Login:</label>
-                <input ref={inputLogin} onChange={onLoginChanged} type="text" id="fname" name="fname" />
-            </div>
-            <div>
-                <label for="lname">Password:</label>
-                <input ref={inputPass} onChange={onPasswordChanged} type="text" id="lname" name="lname" />
-            </div>
-            <div>
-                <button onClick={login}>Login</button>
-            </div>
+        <div>
+            <form onSubmit={props.handleSubmit}>
+                <div>
+                    <label className={css.inputLabelwhite} for="login">Login:</label>
+                    <Field component="input" id="login" name="login" />
+                </div>
+                <div>
+                    <label className={css.inputLabelwhite} for="password">Password:</label>
+                    <Field component="input" id="password" name="password" />
+                </div>
+                <div>
+                    <label className={css.inputLabelwhite} for="rememberMe">remember me</label>
+                    <Field component="input" type="checkbox" name="rememberMe"/>
+                </div>
+                <div>
+                    <button>Login</button>
+                </div>
+            </form>
         </div>
     );
 }
 
-export default Login;
+const ReduxLoginForm = reduxForm({
+    form: "login"
+})(LoginForm);
+
+export const Login = (props) => {
+    let onSubmit = (formData) => {
+        props.login(formData.login, formData.password);
+        console.log(formData);
+    }
+
+    return (
+        <>
+            <div>
+                <h1>Login</h1>
+                <ReduxLoginForm onSubmit={onSubmit} />
+            </div>
+        </>
+    );
+}
+
