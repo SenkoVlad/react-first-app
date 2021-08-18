@@ -22,7 +22,7 @@ export const userApi = {
         return axiosInstance.get(`users/${userId}`).then(response => response.data);
     },
     updateUserStatus(status) {
-        return axiosInstance.put('users/updatestatus', {status : status}).then(response => response.data);
+        return axiosInstance.put('users/updatestatus', { status: status }).then(response => response.data);
     }
 }
 export const authApi = {
@@ -34,5 +34,9 @@ export const authApi = {
             login: login,
             password: password,
         }).then(response => response.data);
+    },
+    logout() {
+        return axiosInstance.get("auth/logout")
+            .then(response => response.data);
     }
 }
