@@ -18,11 +18,19 @@ const LoginForm = (props) => {
                 </div>
                 <div>
                     <label className={css.inputLabelwhite} for="rememberMe">remember me</label>
-                    <Field component={Input} type="checkbox" name="rememberMe" validate={[required]}/>
+                    <Field component={Input} type="checkbox" name="rememberMe"/>
                 </div>
                 <div>
                     <button>Login</button>
                 </div>
+                {
+                    props.errorMessage !== null
+                        ? <div>
+                            {props.errorMessage}
+                        </div>
+                        :
+                        <></>
+                }
             </form>
         </div>
     );
@@ -42,7 +50,7 @@ export const Login = (props) => {
         <>
             <div>
                 <h1>Login</h1>
-                <ReduxLoginForm onSubmit={onSubmit} />
+                <ReduxLoginForm  errorMessage={props.errorMessage} onSubmit={onSubmit} />
             </div>
         </>
     );

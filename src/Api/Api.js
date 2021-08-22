@@ -36,7 +36,6 @@ export const authApi = {
         }).then(response => response.data);
     },
     logout() {
-        return axiosInstance.get("auth/logout")
-            .then(response => response.data);
+        return axiosInstance.delete("auth/logout").then(response => response.data);
     }
 }

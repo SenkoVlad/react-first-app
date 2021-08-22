@@ -1,10 +1,11 @@
-import { SET_LOGIN_DATA, SET_NEW_LOGIN_TEXT, SET_NEW_PASSWORD_TEXT, SET_LOGOUT, DELETE_AUTH_DATA } from './constants'
+import { SET_LOGIN_DATA, SET_LOGOUT, DELETE_AUTH_DATA, SET_LOGIN_ERROR_MESSAGE } from './constants'
 import { authApi } from '../Api/Api';
 
 let initialState = {
     userId: null,
     login: null,
     email: null,
+    errorMessage: null,
     isLogin: false
 }
 
@@ -15,16 +16,6 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 ...action.data,
                 isLogin: true
-            }
-        case SET_NEW_LOGIN_TEXT:
-            return {
-                ...state,
-                inputLogin: action.data
-            }
-        case SET_NEW_PASSWORD_TEXT:
-            return {
-                ...state,
-                inputPassword: action.data
             }
         case SET_LOGOUT:
             return {
@@ -38,6 +29,11 @@ const authReducer = (state = initialState, action) => {
                 email: null,
                 isLogin: null
             }
+        case SET_LOGIN_ERROR_MESSAGE:
+            return {
+                ...state,
+                errorMessage: action.data
+            }
         default:
             return {
                 ...state
@@ -46,9 +42,8 @@ const authReducer = (state = initialState, action) => {
 }
 export const setAuthDataActionCreater = (email, login, userId) => ({ type: SET_LOGIN_DATA, data: { userId, login, email } })
 export const setLogoutActionCreater = () => ({ type: SET_LOGOUT, data: false })
-export const setInputLoginActionCreate = (login) => ({ type: SET_NEW_LOGIN_TEXT, data: login })
-export const setInputPasswordActionCreate = (password) => ({ type: SET_NEW_PASSWORD_TEXT, data: password })
 export const deleteAuthData = () => ({ type: DELETE_AUTH_DATA });
+export const setLoginError = (errorMessage) => ({ type: SET_LOGIN_ERROR_MESSAGE, data: errorMessage });
 
 export const getAuthState = () => {
     return (dispatch) => {
@@ -70,6 +65,9 @@ export const login = (login, password) => {
             if (response.resultCode === 0) {
                 let { email, login, userId } = response.result;
                 dispatch(setAuthDataActionCreater(email, login, userId));
+            }
+            else if (response.resultCode === 1) {
+                dispatch(setLoginError(response.message));
             }
         });
     }
