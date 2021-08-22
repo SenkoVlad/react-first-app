@@ -3,12 +3,14 @@ import { Message } from "./Message/Message";
 import { DialogItem } from "./DialogItem/DialogItem";
 import React from 'react'
 import { Field, reduxForm } from "redux-form";
+import { Input } from "../Common/FormControls";
+import { required } from "../Common/Utils/Validators";
 
 const MessageForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field component='textarea' name='newMessageText' />
+                <Field component={Input} name='newMessageText' validate={[required]} />
             </div>
             <div>
                 <button>Send message</button>
