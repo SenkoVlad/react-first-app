@@ -5,7 +5,8 @@ let initialState = {
     isInitialized: false
 }
 
-const authReducer = (state = initialState, action) => {
+const appReducer = (state = initialState, action) => {
+    debugger;
     switch (action.type) {
         case SET_INITIALIZATION_DATA:
             return {
@@ -20,7 +21,7 @@ const authReducer = (state = initialState, action) => {
 export const setInitializationState = (flag) => ({ type: SET_INITIALIZATION_DATA, data: flag })
 
 export const initialize = () => (dispatch) => {
-    let promises = dispatch(getAuthState());
+    let promises = getAuthState;
 
     Promise.all([promises])
         .then(() => {
@@ -29,4 +30,4 @@ export const initialize = () => (dispatch) => {
 }
 
 
-export default authReducer
+export default appReducer
