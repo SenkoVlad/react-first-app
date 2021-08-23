@@ -42,8 +42,10 @@ const profileReducer = (state = initialState, action) => {
         case UPDATE_USER_STATUS: {
             return {
                 ...state,
-                profileInfo : { ...state.profileInfo, 
-                                status : action.status }
+                profileInfo: {
+                    ...state.profileInfo,
+                    status: action.status
+                }
             }
         }
         default:
@@ -59,28 +61,25 @@ const getMaxPostId = (state) => {
 export const newPostActionCreator = (newposttext) => ({ type: ADD_POST, text: newposttext });
 export const setUsersProfile = (profileInfo) => ({ type: SET_PROFILE_INFO, profileInfo: profileInfo });
 export const setLoadingGif = (flag) => ({ type: SET_LOADING_GIF_PAGE, isLoading: flag });
-export const updateUserStatusActionCreater = (status) => ( {type : UPDATE_USER_STATUS, status : status});
+export const updateUserStatusActionCreater = (status) => ({ type: UPDATE_USER_STATUS, status: status });
 
-export const getUserProfile = (userId) => {
-    return (dispatch) => {
-        dispatch(setLoadingGif(true));
-        userApi.getUserProfile(userId)
-            .then(response => {
-                dispatch(setLoadingGif(false));
-                dispatch(setUsersProfile(response.result));
-            });
-    }
+export const getUserProfile = (userId) => (dispatch) => {
+    dispatch(setLoadingGif(true));
+    return userApi.getUserProfile(userId)
+        .then(response => {
+            dispatch(setLoadingGif(false));
+            dispatch(setUsersProfile(response.result));
+        });
 }
 
-export const updateUserStatus = (status) => {
-    return (dispatch) => {
-        userApi.updateUserStatus(status)
-            .then(response => {
-                if(response.resultCode === 0) {
-                    dispatch(updateUserStatusActionCreater(status));
-                }
-            })
-    }
+
+export const updateUserStatus = (status) => (dispatch) => {
+    return userApi.updateUserStatus(status)
+        .then(response => {
+            if (response.resultCode === 0) {
+                dispatch(updateUserStatusActionCreater(status));
+            }
+        })
 }
 
 export default profileReducer;

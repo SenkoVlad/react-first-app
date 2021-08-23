@@ -1,5 +1,6 @@
-import { SET_LOGIN_DATA, SET_LOGOUT, DELETE_AUTH_DATA, SET_LOGIN_ERROR_MESSAGE } from './constants'
+import { SET_LOGIN_DATA, SET_LOGOUT, DELETE_AUTH_DATA } from './constants'
 import { authApi } from '../Api/Api';
+import { stopSubmit } from 'redux-form';
 
 let initialState = {
     userId: null,
@@ -29,11 +30,6 @@ const authReducer = (state = initialState, action) => {
                 email: null,
                 isLogin: null
             }
-        case SET_LOGIN_ERROR_MESSAGE:
-            return {
-                ...state,
-                errorMessage: action.data
-            }
         default:
             return {
                 ...state
@@ -43,35 +39,31 @@ const authReducer = (state = initialState, action) => {
 export const setAuthDataActionCreater = (email, login, userId) => ({ type: SET_LOGIN_DATA, data: { userId, login, email } })
 export const setLogoutActionCreater = () => ({ type: SET_LOGOUT, data: false })
 export const deleteAuthData = () => ({ type: DELETE_AUTH_DATA });
-export const setLoginError = (errorMessage) => ({ type: SET_LOGIN_ERROR_MESSAGE, data: errorMessage });
 
-export const getAuthState = () => {
-    return (dispatch) => {
-        authApi.getAuthState().then(response => {
-            if (response.resultCode === 0) {
-                let { email, login, userId } = response.result;
-                dispatch(setAuthDataActionCreater(email, login, userId));
-            }
-            else {
-                dispatch(setLogoutActionCreater());
-            }
-        });
-    }
+export const getAuthState = () => (dispatch) => {
+    return authApi.getAuthState().then(response => {
+        if (response.resultCode === 0) {
+            let { email, login, userId } = response.result;
+            dispatch(setAuthDataActionCreater(email, login, userId));
+        }
+        else {
+            dispatch(setLogoutActionCreater());
+        }
+    });
 }
 
-export const login = (login, password) => {
-    return (dispatch) => {
-        authApi.login(login, password).then(response => {
-            if (response.resultCode === 0) {
-                let { email, login, userId } = response.result;
-                dispatch(setAuthDataActionCreater(email, login, userId));
-            }
-            else if (response.resultCode === 1) {
-                dispatch(setLoginError(response.message));
-            }
-        });
-    }
+export const login = (login, password) => (dispatch) => {
+    return authApi.login(login, password).then(response => {
+        if (response.resultCode === 0) {
+            let { email, login, userId } = response.result;
+            dispatch(setAuthDataActionCreater(email, login, userId));
+        }
+        else {
+            dispatch(stopSubmit("login", { _error: response.message }))
+        }
+    });
 }
+
 export const logout = () => {
     return (dispatch) => {
         authApi.logout().then(response => {

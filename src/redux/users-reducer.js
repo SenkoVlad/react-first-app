@@ -82,45 +82,41 @@ export const setUsersCurrentPage = (page) => ({ type: SET_USERS_CURRENT_PAGE, cu
 export const setLoadingGif = (flag) => ({ type: SET_LOADING_GIF_PAGE, isLoading: flag })
 export const setFollowingProcess = (isFollowing, userId) => ({ type: SET_FOLLOWING_PROCESS, isFollowing, userId })
 
-export const getUsers = (currentPage, pageSize, setPageFlag = false) => {
-    return (dispatch) => {
-        if (setPageFlag)
-            dispatch(setUsersCurrentPage(currentPage));
+export const getUsers = (currentPage, pageSize, setPageFlag = false) => (dispatch) => {
+    if (setPageFlag)
+        dispatch(setUsersCurrentPage(currentPage));
 
-        dispatch(setLoadingGif(true));
-        userApi.getUsers(currentPage, pageSize)
-            .then(data => {
-                dispatch(setLoadingGif(false));
-                if (data.resultCode == 0) {
-                    dispatch(setUsers(data.result.items));
-                    dispatch(setUsersTotalCount(data.result.totalCount));
-                }
-            });
-    }
+    dispatch(setLoadingGif(true));
+    return userApi.getUsers(currentPage, pageSize)
+        .then(data => {
+            dispatch(setLoadingGif(false));
+            if (data.resultCode == 0) {
+                dispatch(setUsers(data.result.items));
+                dispatch(setUsersTotalCount(data.result.totalCount));
+            }
+        });
 }
-export const followUser = (userId) => {
-    return (dispatch) => {
-        dispatch(setFollowingProcess(true, userId));
-        userApi.followUser(userId)
-            .then(data => {
-                if (data.resultCode == 0) {
-                    dispatch(setUserFollowing(userId));
-                }
-                dispatch(setFollowingProcess(false, userId));
-            });
-    }
+
+export const followUser = (userId) => (dispatch) => {
+    dispatch(setFollowingProcess(true, userId));
+    return userApi.followUser(userId)
+        .then(data => {
+            if (data.resultCode == 0) {
+                dispatch(setUserFollowing(userId));
+            }
+            dispatch(setFollowingProcess(false, userId));
+        });
 }
-export const unfollowUser = (userId) => {
-    return (dispatch) => {
-        dispatch(setFollowingProcess(true, userId));
-        userApi.unfollowUser(userId)
-            .then(data => {
-                if (data.resultCode == 0) {
-                    dispatch(setUserUnfollowing(userId));
-                }
-                dispatch(setFollowingProcess(false, userId));
-            });
-    }
+export const unfollowUser = (userId) => (dispatch) => {
+    dispatch(setFollowingProcess(true, userId));
+    return userApi.unfollowUser(userId)
+        .then(data => {
+            if (data.resultCode == 0) {
+                dispatch(setUserUnfollowing(userId));
+            }
+            dispatch(setFollowingProcess(false, userId));
+        });
 }
+
 
 export default usersReducer;

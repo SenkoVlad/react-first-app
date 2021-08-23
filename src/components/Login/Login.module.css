@@ -4,3 +4,7 @@
 .inputLabelwhite {
     color: white;
 }
+.errorBlock {
+    border: red 2px solid;
+    color: red;
+}

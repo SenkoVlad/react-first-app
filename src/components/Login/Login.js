@@ -24,9 +24,9 @@ const LoginForm = (props) => {
                     <button>Login</button>
                 </div>
                 {
-                    props.errorMessage !== null
-                        ? <div>
-                            {props.errorMessage}
+                    props.error != null
+                        ? <div className={css.errorBlock}>
+                            {props.error}
                         </div>
                         :
                         <></>

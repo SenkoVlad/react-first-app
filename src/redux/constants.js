@@ -15,4 +15,5 @@ export const SET_LOGOUT = 'set-logout';
 export const SET_FOLLOWING_PROCESS = 'set-following_process';
 export const UPDATE_USER_STATUS = 'update-user-status';
 export const DELETE_AUTH_DATA = 'delete-auth-data';
-export const SET_LOGIN_ERROR_MESSAGE = 'set-login-error-message';
+export const SET_INITIALIZATION_DATA = 'set-initialization-data';
+
