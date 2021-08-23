@@ -6,7 +6,6 @@ let initialState = {
 }
 
 const appReducer = (state = initialState, action) => {
-    debugger;
     switch (action.type) {
         case SET_INITIALIZATION_DATA:
             return {

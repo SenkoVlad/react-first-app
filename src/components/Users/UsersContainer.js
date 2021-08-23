@@ -1,8 +1,11 @@
 import { connect } from 'react-redux';
-import {  followUser, unfollowUser, setFollowingProcess, getUsers, setUsers } from '../../redux/users-reducer'
+import { followUser, unfollowUser, setFollowingProcess, getUsers, setUsers } from '../../redux/users-reducer'
 import React from 'react';
 import Users from './Users';
 import Preloader from '../Common/Preloader/Preloader';
+import { getUsersSelector, getCurrentPageSelector, 
+         getFollowingUsersId, getIsLoadingSelector, 
+         getPageSizeSelector, getTotalPageCountSelector } from '../../redux/users-selector'
 
 class UsersContainer extends React.Component {
     componentDidMount() {
@@ -36,12 +39,12 @@ class UsersContainer extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        users: state.usersPage.users,
-        currentPage: state.usersPage.currentPage,
-        totalPageCount: state.usersPage.totalPageCount,
-        pageSize: state.usersPage.pageSize,
-        isLoading: state.usersPage.isLoading,
-        followingUsersId: state.usersPage.followingUsersId
+        users: getUsersSelector(state),
+        currentPage: getCurrentPageSelector(state),
+        totalPageCount: getTotalPageCountSelector(state),
+        pageSize: getPageSizeSelector(state),
+        isLoading: getIsLoadingSelector(state),
+        followingUsersId: getFollowingUsersId(state)
     }
 }
 
