@@ -8,7 +8,9 @@ let initialState = {
         { id: 3, text: "The third post", likes: 3 },
         { id: 4, text: "The fourth post", likes: 7 },
     ],
-    profileInfo: {},
+    profileInfo: {
+        status : ''
+    },
     isLoading: false,
 }
 

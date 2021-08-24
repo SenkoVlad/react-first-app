@@ -20,7 +20,7 @@ const appReducer = (state = initialState, action) => {
 export const setInitializationState = (flag) => ({ type: SET_INITIALIZATION_DATA, data: flag })
 
 export const initialize = () => (dispatch) => {
-    let promises = getAuthState;
+    let promises = getAuthState()(dispatch);
 
     Promise.all([promises])
         .then(() => {

@@ -1,6 +1,7 @@
 import css from './ProfileInfo.module.css'
 import avatar from '../../../www/images/avatar.png'
 import ProfileStatusInfo from './ProfileStatusInfo';
+import ProfileStatusInfoWithHook from './ProfileStatusInfoWIthHook';
 
 const ProfileInfo = (props) => {
   return (
@@ -12,7 +13,7 @@ const ProfileInfo = (props) => {
         <img src={props.profileInfo.photoUrl === '' ? avatar : props.profileInfo.photoUrl} className={css.userPhoto} />
       </div>
 
-      <ProfileStatusInfo status={props.profileInfo.status} updateUserStatus={props.updateUserStatus}/>
+      <ProfileStatusInfoWithHook status={props.profileInfo.status} updateUserStatus={props.updateUserStatus}/>
 
       <div>
         {props.profileInfo.isLookingForAJob === true ? 'Job resume: ' + props.profileInfo.resumeText : ''}

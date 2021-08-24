@@ -3,9 +3,11 @@ import { followUser, unfollowUser, setFollowingProcess, getUsers, setUsers } fro
 import React from 'react';
 import Users from './Users';
 import Preloader from '../Common/Preloader/Preloader';
-import { getUsersSelector, getCurrentPageSelector, 
-         getFollowingUsersId, getIsLoadingSelector, 
-         getPageSizeSelector, getTotalPageCountSelector } from '../../redux/users-selector'
+import {
+    getUsersSelector, getCurrentPageSelector,
+    getFollowingUsersId, getIsLoadingSelector,
+    getPageSizeSelector, getTotalPageCountSelector
+} from '../../redux/users-selector'
 
 class UsersContainer extends React.Component {
     componentDidMount() {
