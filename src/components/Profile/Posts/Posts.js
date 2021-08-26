@@ -26,23 +26,23 @@ const ReduxPostForm = reduxForm({
   form: 'post'
 })(PostForm);
 
-const Posts = (props) => {
+const Posts = React.memo((props) => {
   let postElements = props.posts.map(post => <Post text={post.text} likes={post.likes} key={post.id} />)
 
   let onSubmit = (formData) => {
     props.addPost(formData.newposttext);
   }
-  return (
-    <div>
+    return (
       <div>
-        <ReduxPostForm onSubmit={onSubmit} />
+        <div>
+          <ReduxPostForm onSubmit={onSubmit} />
+        </div>
+        <h3>My posts</h3>
+        <div className={css.paddingTop10}>
+          {postElements}
+        </div>
       </div>
-      <h3>My posts</h3>
-      <div className={css.paddingTop10}>
-        {postElements}
-      </div>
-    </div>
-  )
-}
+    );
+});
 
 export default Posts;

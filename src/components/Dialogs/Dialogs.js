@@ -23,28 +23,59 @@ const ReduxMessageForm = reduxForm({
     form: "message"
 })(MessageForm);
 
+// const Dialogs = (props) => {
+//     let dialogElements = props.dialogPage.dialogs.map(elem => <DialogItem name={elem.name} id={elem.id} key={elem.id} />)
+//     let messageElements = props.dialogPage.messages.map(elem => <Message message={elem} key={elem.id} />)
 
-const Dialogs = (props) => {
-    let dialogElements = props.dialogPage.dialogs.map(elem => <DialogItem name={elem.name} id={elem.id} key={elem.id} />)
-    let messageElements = props.dialogPage.messages.map(elem => <Message message={elem} key={elem.id} />)
+//     let onSubmit = (formData) => {
+//         props.sendMessage(formData.newMessageText);
+//     }
 
-    let onSubmit = (formData) => {
-        props.sendMessage(formData.newMessageText);
+//     return (
+//         <div className={css.dialogs}>
+//             <div className={css.dialogsItems}>
+//                 {dialogElements}
+//             </div>
+//             <div>
+//                 <div className={css.messages}>
+//                     {messageElements}
+//                 </div>
+//                 <ReduxMessageForm onSubmit={onSubmit} />
+//             </div>
+//         </div>
+//     );
+// }
+
+class Dialogs extends React.Component {
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return this.props != nextProps || this.state != nextState;
     }
 
-    return (
-        <div className={css.dialogs}>
-            <div className={css.dialogsItems}>
-                {dialogElements}
-            </div>
-            <div>
-                <div className={css.messages}>
-                    {messageElements}
+    render() {
+        let messageElements = this.props.dialogPage.messages.map(elem => <Message message={elem} key={elem.id} />)
+        let dialogElements = this.props.dialogPage.dialogs.map(elem => <DialogItem name={elem.name} id={elem.id} key={elem.id} />)
+ 
+        let onSubmit = (formData) => {
+            this.props.sendMessage(formData.newMessageText);
+        }
+
+        return (
+
+            <div className={css.dialogs}>
+                <div className={css.dialogsItems}>
+                    {dialogElements}
                 </div>
-                <ReduxMessageForm onSubmit={onSubmit} />
+                <div>
+                    <div className={css.messages}>
+                        {messageElements}
+                    </div>
+                    <ReduxMessageForm onSubmit={onSubmit} />
+                </div>
             </div>
-        </div>
-    );
+        )
+    }
 }
+
 
 export default Dialogs
