@@ -9,7 +9,7 @@ let initialState = {
         { id: 4, text: "The fourth post", likes: 7 },
     ],
     profileInfo: {
-        status : ''
+        status: ''
     },
     isLoading: false,
 }
@@ -65,23 +65,21 @@ export const setUsersProfile = (profileInfo) => ({ type: SET_PROFILE_INFO, profi
 export const setLoadingGif = (flag) => ({ type: SET_LOADING_GIF_PAGE, isLoading: flag });
 export const updateUserStatusActionCreater = (status) => ({ type: UPDATE_USER_STATUS, status: status });
 
-export const getUserProfile = (userId) => (dispatch) => {
+export const getUserProfile = (userId) => async (dispatch) => {
     dispatch(setLoadingGif(true));
-    return userApi.getUserProfile(userId)
-        .then(response => {
-            dispatch(setLoadingGif(false));
-            dispatch(setUsersProfile(response.result));
-        });
+    let response = await userApi.getUserProfile(userId)
+
+    dispatch(setLoadingGif(false));
+    dispatch(setUsersProfile(response.result));
 }
 
 
-export const updateUserStatus = (status) => (dispatch) => {
-    return userApi.updateUserStatus(status)
-        .then(response => {
-            if (response.resultCode === 0) {
-                dispatch(updateUserStatusActionCreater(status));
-            }
-        })
+export const updateUserStatus = (status) => async (dispatch) => {
+    let response = await userApi.updateUserStatus(status);
+
+    if (response.resultCode === 0) {
+        dispatch(updateUserStatusActionCreater(status));
+    }
 }
 
 export default profileReducer;

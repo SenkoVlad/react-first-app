@@ -1,5 +1,6 @@
 import { UNFOLLOW_USER, FOLLOW_USER, SET_USERS, SET_USERS_TOTAL_COUNT, SET_USERS_CURRENT_PAGE, SET_LOADING_GIF_PAGE, SET_FOLLOWING_PROCESS } from './constants'
 import { userApi } from '../Api/Api'
+import { changeStateProp } from '../components/Common/helpers'
 
 let initialState = {
     users: [
@@ -13,29 +14,17 @@ let initialState = {
 const usersReducer = (state = initialState, action) => {
     switch (action.type) {
         case FOLLOW_USER: {
+            const a = changeStateProp(state.users, "id", action.userId, {followed : true});
             return {
                 ...state,
-                users: state.users.map((user) => {
-                    if (user.id === action.userId)
-                        return {
-                            ...user,
-                            followed: true
-                        }
-                    return user;
-                })
+                users: a
             }
         }
         case UNFOLLOW_USER: {
+            const a = changeStateProp(state.users, "id", action.userId, {followed : false});
             return {
                 ...state,
-                users: state.users.map((user) => {
-                    if (user.id === action.userId)
-                        return {
-                            ...user,
-                            followed: false
-                        }
-                    return user;
-                })
+                users: a
             }
         }
         case SET_USERS: {
@@ -82,40 +71,36 @@ export const setUsersCurrentPage = (page) => ({ type: SET_USERS_CURRENT_PAGE, cu
 export const setLoadingGif = (flag) => ({ type: SET_LOADING_GIF_PAGE, isLoading: flag })
 export const setFollowingProcess = (isFollowing, userId) => ({ type: SET_FOLLOWING_PROCESS, isFollowing, userId })
 
-export const getUsers = (currentPage, pageSize, setPageFlag = false) => (dispatch) => {
+export const getUsers = (currentPage, pageSize, setPageFlag = false) => async (dispatch) => {
     if (setPageFlag)
         dispatch(setUsersCurrentPage(currentPage));
-
     dispatch(setLoadingGif(true));
-    return userApi.getUsers(currentPage, pageSize)
-        .then(data => {
-            dispatch(setLoadingGif(false));
-            if (data.resultCode == 0) {
-                dispatch(setUsers(data.result.items));
-                dispatch(setUsersTotalCount(data.result.totalCount));
-            }
-        });
+    let response = await userApi.getUsers(currentPage, pageSize)
+
+    dispatch(setLoadingGif(false));
+    if (response.resultCode == 0) {
+        dispatch(setUsers(response.result.items));
+        dispatch(setUsersTotalCount(response.result.totalCount));
+    }
 }
 
-export const followUser = (userId) => (dispatch) => {
+export const followUser = (userId) => async (dispatch) => {
     dispatch(setFollowingProcess(true, userId));
-    return userApi.followUser(userId)
-        .then(data => {
-            if (data.resultCode == 0) {
-                dispatch(setUserFollowing(userId));
-            }
-            dispatch(setFollowingProcess(false, userId));
-        });
+    let response = await userApi.followUser(userId);
+
+    if (response.resultCode == 0) {
+        dispatch(setUserFollowing(userId));
+    }
+    dispatch(setFollowingProcess(false, userId));
 }
-export const unfollowUser = (userId) => (dispatch) => {
+export const unfollowUser = (userId) => async (dispatch) => {
     dispatch(setFollowingProcess(true, userId));
-    return userApi.unfollowUser(userId)
-        .then(data => {
-            if (data.resultCode == 0) {
-                dispatch(setUserUnfollowing(userId));
-            }
-            dispatch(setFollowingProcess(false, userId));
-        });
+    let response = await userApi.unfollowUser(userId);
+
+    if (response.resultCode == 0) {
+        dispatch(setUserUnfollowing(userId));
+    }
+    dispatch(setFollowingProcess(false, userId));
 }
 
 

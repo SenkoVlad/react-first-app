@@ -1,6 +1,5 @@
 import css from './ProfileInfo.module.css'
 import avatar from '../../../www/images/avatar.png'
-import ProfileStatusInfo from './ProfileStatusInfo';
 import ProfileStatusInfoWithHook from './ProfileStatusInfoWIthHook';
 
 const ProfileInfo = (props) => {

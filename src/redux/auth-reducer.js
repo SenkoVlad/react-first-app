@@ -40,37 +40,35 @@ export const setAuthDataActionCreater = (email, login, userId) => ({ type: SET_L
 export const setLogoutActionCreater = () => ({ type: SET_LOGOUT, data: false })
 export const deleteAuthData = () => ({ type: DELETE_AUTH_DATA });
 
-export const getAuthState = () => (dispatch) => {
-    return authApi.getAuthState().then(response => {
-        if (response.resultCode === 0) {
-            let { email, login, userId } = response.result;
-            dispatch(setAuthDataActionCreater(email, login, userId));
-        }
-        else {
-            dispatch(setLogoutActionCreater());
-        }
-    });
+export const getAuthState = () => async (dispatch) => {
+    let response = await authApi.getAuthState();
+
+    if (response.resultCode === 0) {
+        let { email, login, userId } = response.result;
+        dispatch(setAuthDataActionCreater(email, login, userId));
+    }
+    else {
+        dispatch(setLogoutActionCreater());
+    }
 }
 
-export const login = (login, password) => (dispatch) => {
-    return authApi.login(login, password).then(response => {
-        if (response.resultCode === 0) {
-            let { email, login, userId } = response.result;
-            dispatch(setAuthDataActionCreater(email, login, userId));
-        }
-        else {
-            dispatch(stopSubmit("login", { _error: response.message }))
-        }
-    });
+export const login = (login, password) => async (dispatch) => {
+    let response = await authApi.login(login, password);
+
+    if (response.resultCode === 0) {
+        let { email, login, userId } = response.result;
+        dispatch(setAuthDataActionCreater(email, login, userId));
+    }
+    else {
+        dispatch(stopSubmit("login", { _error: response.message }))
+    }
 }
 
-export const logout = () => {
-    return (dispatch) => {
-        authApi.logout().then(response => {
-            if (response.resultCode === 0) {
-                dispatch(deleteAuthData());
-            }
-        });
+export const logout = () => async (dispatch) => {
+    let response = await authApi.logout()
+
+    if (response.resultCode === 0) {
+        dispatch(deleteAuthData());
     }
 }
 
