@@ -7,7 +7,8 @@ let initialState = {
     ],
     currentPage: 1,
     totalPageCount: 0,
-    pageSize: 10,
+    pageSize: 5,
+    paginatorPartSize: 10,
     isLoading: false,
     followingUsersId: [],
 }

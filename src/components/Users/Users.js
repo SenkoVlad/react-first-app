@@ -2,10 +2,10 @@ import React from 'react';
 import { Paginator } from '../Common/Utils/Paginator';
 import { User } from './User';
 
-let Users = React.memo(({totalPageCount, currentPage, users, followingUsersId, unfollowUser, followUser, setCurrentPage, pageSize}) => {
+let Users = React.memo(({totalPageCount, currentPage, users, followingUsersId, unfollowUser, followUser, setCurrentPage, pageSize, paginatorPartSize}) => {
     return (
         <div>
-            <Paginator totalPageCount={totalPageCount} currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={pageSize}/>
+            <Paginator totalItemsCount={totalPageCount} currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={pageSize} paginatorPartSize={paginatorPartSize}/>
             {
                 users.map(u =>
                     <User user={u} followingUsersId={followingUsersId} unfollowUser={unfollowUser} followUser={followUser}/>

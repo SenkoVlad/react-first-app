@@ -16,3 +16,6 @@ export const getIsLoadingSelector = (state) => {
 export const getFollowingUsersId = (state) => {
     return state.usersPage.followingUsersId;
 }
+export const getPaginatorPartSize = (state) => {
+    return state.usersPage.paginatorPartSize
+}

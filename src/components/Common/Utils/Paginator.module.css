@@ -1,3 +1,8 @@
 .currentPage {
   font-weight: bold;
+  border: 1px solid yellow;
+
+}
+.page {
+  border: 1px solid black ;
 }

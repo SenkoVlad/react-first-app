@@ -6,7 +6,8 @@ import Preloader from '../Common/Preloader/Preloader';
 import {
     getUsersSelector, getCurrentPageSelector,
     getFollowingUsersId, getIsLoadingSelector,
-    getPageSizeSelector, getTotalPageCountSelector
+    getPageSizeSelector, getTotalPageCountSelector,
+    getPaginatorPartSize
 } from '../../redux/users-selector'
 
 class UsersContainer extends React.PureComponent {
@@ -22,19 +23,18 @@ class UsersContainer extends React.PureComponent {
     render() {
         return (
             <>
-                {
-                    this.props.isLoading ?
-                        <Preloader /> :
-                        <Users
-                            totalPageCount={this.props.totalPageCount}
-                            pageSize={this.props.pageSize}
-                            currentPage={this.props.currentPage}
-                            unfollowUser={this.props.unfollowUser}
-                            followUser={this.props.followUser}
-                            setCurrentPage={this.setCurrentPage}
-                            users={this.props.users}
-                            followingUsersId={this.props.followingUsersId} />
-                }
+                {this.props.isLoading ?
+                    <Preloader /> : null}
+                <Users
+                    totalPageCount={this.props.totalPageCount}
+                    pageSize={this.props.pageSize}
+                    currentPage={this.props.currentPage}
+                    unfollowUser={this.props.unfollowUser}
+                    followUser={this.props.followUser}
+                    setCurrentPage={this.setCurrentPage}
+                    users={this.props.users}
+                    followingUsersId={this.props.followingUsersId}
+                    paginatorPartSize={this.props.paginatorPartSize} />
             </>);
     }
 }
@@ -46,7 +46,8 @@ const mapStateToProps = (state) => {
         totalPageCount: getTotalPageCountSelector(state),
         pageSize: getPageSizeSelector(state),
         isLoading: getIsLoadingSelector(state),
-        followingUsersId: getFollowingUsersId(state)
+        followingUsersId: getFollowingUsersId(state),
+        paginatorPartSize: getPaginatorPartSize(state)
     }
 }
 
