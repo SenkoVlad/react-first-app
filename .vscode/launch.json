@@ -6,6 +6,23 @@
     "configurations": [
         {
             "type": "node",
+            "name": "vscode-jest-tests",
+            "request": "launch",
+            "args": [
+              "test",
+              "--runInBand",
+              "--no-cache"
+            ],
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "internalConsoleOptions": "openOnSessionStart",
+            "disableOptimisticBPs": true,
+            "runtimeExecutable":
+              "${workspaceFolder}/node_modules/.bin/react-scripts",
+            "protocol": "inspector"
+        },
+        {
+            "type": "node",
             "protocol": "inspector",
             "request": "launch",
             "name": "Launch test files with TestCafe",
@@ -16,6 +33,7 @@
             ],
             "console": "integratedTerminal",
             "cwd": "${workspaceRoot}"
-        }
+        },
+
     ]
 }
