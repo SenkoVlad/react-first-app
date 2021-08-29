@@ -1,32 +1,32 @@
 {
   "files": {
     "main.css": "/react-first-app/static/css/main.c820f0f1.chunk.css",
-    "main.js": "/react-first-app/static/js/main.5bed0705.chunk.js",
-    "main.js.map": "/react-first-app/static/js/main.5bed0705.chunk.js.map",
-    "runtime-main.js": "/react-first-app/static/js/runtime-main.679a8153.js",
-    "runtime-main.js.map": "/react-first-app/static/js/runtime-main.679a8153.js.map",
-    "static/js/2.1b135fd0.chunk.js": "/react-first-app/static/js/2.1b135fd0.chunk.js",
-    "static/js/2.1b135fd0.chunk.js.map": "/react-first-app/static/js/2.1b135fd0.chunk.js.map",
+    "main.js": "/react-first-app/static/js/main.d800ca01.chunk.js",
+    "main.js.map": "/react-first-app/static/js/main.d800ca01.chunk.js.map",
+    "runtime-main.js": "/react-first-app/static/js/runtime-main.771fffac.js",
+    "runtime-main.js.map": "/react-first-app/static/js/runtime-main.771fffac.js.map",
+    "static/js/2.36421f13.chunk.js": "/react-first-app/static/js/2.36421f13.chunk.js",
+    "static/js/2.36421f13.chunk.js.map": "/react-first-app/static/js/2.36421f13.chunk.js.map",
     "static/css/3.cd7d8094.chunk.css": "/react-first-app/static/css/3.cd7d8094.chunk.css",
     "static/js/3.05222ca2.chunk.js": "/react-first-app/static/js/3.05222ca2.chunk.js",
     "static/js/3.05222ca2.chunk.js.map": "/react-first-app/static/js/3.05222ca2.chunk.js.map",
     "static/css/4.fbdffe52.chunk.css": "/react-first-app/static/css/4.fbdffe52.chunk.css",
-    "static/js/4.326fd4b6.chunk.js": "/react-first-app/static/js/4.326fd4b6.chunk.js",
-    "static/js/4.326fd4b6.chunk.js.map": "/react-first-app/static/js/4.326fd4b6.chunk.js.map",
+    "static/js/4.eddafc56.chunk.js": "/react-first-app/static/js/4.eddafc56.chunk.js",
+    "static/js/4.eddafc56.chunk.js.map": "/react-first-app/static/js/4.eddafc56.chunk.js.map",
     "static/js/5.a8fadd2f.chunk.js": "/react-first-app/static/js/5.a8fadd2f.chunk.js",
     "static/js/5.a8fadd2f.chunk.js.map": "/react-first-app/static/js/5.a8fadd2f.chunk.js.map",
     "index.html": "/react-first-app/index.html",
     "static/css/3.cd7d8094.chunk.css.map": "/react-first-app/static/css/3.cd7d8094.chunk.css.map",
     "static/css/4.fbdffe52.chunk.css.map": "/react-first-app/static/css/4.fbdffe52.chunk.css.map",
     "static/css/main.c820f0f1.chunk.css.map": "/react-first-app/static/css/main.c820f0f1.chunk.css.map",
-    "static/js/2.1b135fd0.chunk.js.LICENSE.txt": "/react-first-app/static/js/2.1b135fd0.chunk.js.LICENSE.txt",
+    "static/js/2.36421f13.chunk.js.LICENSE.txt": "/react-first-app/static/js/2.36421f13.chunk.js.LICENSE.txt",
     "static/media/avatar.png": "/react-first-app/static/media/avatar.32962620.png",
     "static/media/preloader.7f686c03.gif": "/react-first-app/static/media/preloader.7f686c03.gif"
   },
   "entrypoints": [
-    "static/js/runtime-main.679a8153.js",
-    "static/js/2.1b135fd0.chunk.js",
+    "static/js/runtime-main.771fffac.js",
+    "static/js/2.36421f13.chunk.js",
     "static/css/main.c820f0f1.chunk.css",
-    "static/js/main.5bed0705.chunk.js"
+    "static/js/main.d800ca01.chunk.js"
   ]
 }
