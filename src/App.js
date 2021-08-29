@@ -4,9 +4,7 @@ import Music from './components/Music/Music';
 import News from './components/News/News';
 import Settings from './components/Settings/Settings';
 import { Route, withRouter } from 'react-router-dom'
-import DialogsContainer from './components/Dialogs/DialogsContainer';
 import UsersContainer from './components/Users/UsersContainer';
-import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import LoginContainer from './components/Login/LoginContainer';
 import React from 'react';
@@ -17,8 +15,9 @@ import Preloader from './components/Common/Preloader/Preloader';
 import { BrowserRouter } from 'react-router-dom'
 import store from './redux/redux-store';
 import { Provider } from 'react-redux'
-
-
+import { SuspenseLoading } from './Hoc/suspenseLoading';
+const DialogsContainer = React.lazy(() =>  import('./components/Dialogs/DialogsContainer'));
+const ProfileContainer = React.lazy(() =>  import('./components/Profile/ProfileContainer'));
 class App extends React.Component {
   componentDidMount() {
     this.props.initialize();
@@ -34,9 +33,9 @@ class App extends React.Component {
         <HeaderContainer />
         <Navbar />
         <div className='dialog-container'>
-          <Route path='/dialogs' render={() => <DialogsContainer />} />
-          <Route path='/profile/:userId?' render={() => <ProfileContainer />} />
-          <Route path='/music' render={() => <Music />} />
+          <Route path='/dialogs' render={(props) => SuspenseLoading(DialogsContainer)(props)} />
+          <Route path='/profile/:userId?' render={(props) => SuspenseLoading(ProfileContainer)(props)} />
+          <Route path='/music' render={() => <Music />} />  
           <Route path='/news' render={() => <News />} />
           <Route path='/settings' render={() => <Settings />} />
           <Route path='/users' render={() => <UsersContainer />} />

@@ -10,8 +10,6 @@ import PostsContainer from './Posts/PostsContainer';
 
 
 class ProfileContainer extends React.Component {
-
-  
   render() {
     if (!this.getCurrentUserId())
       this.props.history.push("/login");
@@ -26,6 +24,7 @@ class ProfileContainer extends React.Component {
                 <PostsContainer />
             </div>
         }
+        <div>{this.props.a}</div>
       </>
     );
   }
