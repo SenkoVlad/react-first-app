@@ -2,8 +2,10 @@ import * as axios from 'axios'
 
 const axiosInstance = axios.create({
     withCredentials: true,
-    baseURL: 'https://apiforreactdeployv1.azurewebsites.net/'
+    baseURL: 'https://apiforreactprod.azurewebsites.net/'
 });
+
+
 
 export const userApi = {
     getUsers(page, pageSize) {

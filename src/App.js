@@ -3,7 +3,7 @@ import Navbar from './components/Navbar/Navbar';
 import Music from './components/Music/Music';
 import News from './components/News/News';
 import Settings from './components/Settings/Settings';
-import { Route, withRouter } from 'react-router-dom'
+import { HashRouter, Route, withRouter } from 'react-router-dom'
 import UsersContainer from './components/Users/UsersContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import LoginContainer from './components/Login/LoginContainer';
@@ -60,11 +60,11 @@ let TempAppComponent = compose(
 let MainAppComponent = (props) => {
   return (
     <React.StrictMode>
-      <BrowserRouter basename={process.env.PUBLIC_URL}>
+      <HashRouter>
         <Provider store={store}>
           <TempAppComponent />
         </Provider>
-      </BrowserRouter>
+      </HashRouter>
     </React.StrictMode>
   );
 }
