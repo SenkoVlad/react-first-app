@@ -2,7 +2,7 @@ import * as axios from 'axios'
 
 const axiosInstance = axios.create({
     withCredentials: true,
-    baseURL: 'https://apiforreactdockerv4.azurewebsites.net/'
+    baseURL: 'https://apiforreactdeployv1.azurewebsites.net/'
 });
 
 export const userApi = {
