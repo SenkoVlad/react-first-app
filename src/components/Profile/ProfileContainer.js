@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ProfileInfo from './ProfileInfo/ProfileInfo'
-import { getUserProfile, setUsersProfile, updateUserStatus } from '../../redux/profile-reducer'
+import { getUserProfile, setUsersProfile, updateUserStatus, saveAvatar } from '../../redux/profile-reducer'
 import Preloader from '../Common/Preloader/Preloader';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
@@ -20,7 +20,10 @@ class ProfileContainer extends React.Component {
           this.props.profile.isLoading ?
             <Preloader /> :
             <div className={css.content}>
-                <ProfileInfo profileInfo={this.props.profile.profileInfo} updateUserStatus={this.props.updateUserStatus}/>
+                <ProfileInfo isOwner={!this.props.match.params.userId} 
+                             profileInfo={this.props.profile.profileInfo} 
+                             updateUserStatus={this.props.updateUserStatus}
+                             saveAvatar={this.props.saveAvatar}/>
                 <PostsContainer />
             </div>
         }
@@ -53,7 +56,7 @@ class ProfileContainer extends React.Component {
 let mapStateToProps = (state) => {
   return {
     userId: state.auth.userId,
-    profile: state.profilePage,
+    profile: state.profilePage
   }
 }
 
@@ -62,6 +65,7 @@ export default compose(
   connect(mapStateToProps, {
     getUserProfile,
     setUsersProfile,
-    updateUserStatus
+    updateUserStatus,
+    saveAvatar
   })
 )(ProfileContainer);

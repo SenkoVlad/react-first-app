@@ -16,4 +16,4 @@ export const SET_FOLLOWING_PROCESS = 'set-following_process';
 export const UPDATE_USER_STATUS = 'update-user-status';
 export const DELETE_AUTH_DATA = 'delete-auth-data';
 export const SET_INITIALIZATION_DATA = 'set-initialization-data';
-
+export const SAVE_AVATAR = 'set-avatar';

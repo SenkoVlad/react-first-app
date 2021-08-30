@@ -2,10 +2,8 @@ import * as axios from 'axios'
 
 const axiosInstance = axios.create({
     withCredentials: true,
-    baseURL: 'https://apiforreactprod.azurewebsites.net/'
+    baseURL: 'https://localhost:5001/'
 });
-
-
 
 export const userApi = {
     getUsers(page, pageSize) {
@@ -25,6 +23,16 @@ export const userApi = {
     },
     updateUserStatus(status) {
         return axiosInstance.put('users/updatestatus', { status: status }).then(response => response.data);
+    },
+    saveAvatar(file) {
+        const formdata = new FormData();
+        formdata.append('image', file);
+
+        return axiosInstance.put('users/savephoto', formdata, {
+            headers: {
+                'Content-type' : 'multipart/form-data'
+            }
+        }).then(response => response.data);
     }
 }
 export const authApi = {
