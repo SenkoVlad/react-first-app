@@ -77,8 +77,9 @@ export const getUserProfile = (userId) => async (dispatch) => {
     dispatch(setLoadingGif(true));
     let response = await userApi.getUserProfile(userId)
 
-    if(response.resultCode === 0)
+    if(response.resultCode === 0){
         dispatch(setUsersProfile(response.result));
+    }
 
     dispatch(setLoadingGif(false));
 }

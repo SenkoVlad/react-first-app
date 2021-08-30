@@ -8,7 +8,6 @@ import { compose } from 'redux';
 import css from './Profile.module.css'
 import PostsContainer from './Posts/PostsContainer';
 
-
 class ProfileContainer extends React.Component {
   render() {
     if (!this.getCurrentUserId())
@@ -20,11 +19,11 @@ class ProfileContainer extends React.Component {
           this.props.profile.isLoading ?
             <Preloader /> :
             <div className={css.content}>
-                <ProfileInfo isOwner={!this.props.match.params.userId} 
-                             profileInfo={this.props.profile.profileInfo} 
-                             updateUserStatus={this.props.updateUserStatus}
-                             saveAvatar={this.props.saveAvatar}/>
-                <PostsContainer />
+              <ProfileInfo isOwner={!this.props.match.params.userId}
+                profileInfo={this.props.profile.profileInfo}
+                updateUserStatus={this.props.updateUserStatus}
+                saveAvatar={this.props.saveAvatar} />
+              <PostsContainer />
             </div>
         }
         <div>{this.props.a}</div>
