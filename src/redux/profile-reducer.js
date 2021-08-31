@@ -1,3 +1,4 @@
+import { stopSubmit } from 'redux-form';
 import { userApi } from '../Api/Api';
 import { ADD_POST, SET_PROFILE_INFO, SET_LOADING_GIF_PAGE, UPDATE_USER_STATUS, SAVE_AVATAR } from './constants'
 
@@ -53,7 +54,7 @@ const profileReducer = (state = initialState, action) => {
         case SAVE_AVATAR: {
             return {
                 ...state,
-                profileInfo: {...state.profileInfo, photoUrl: action.imagePath}
+                profileInfo: { ...state.profileInfo, photoUrl: action.imagePath }
             }
         }
         default:
@@ -70,14 +71,14 @@ export const newPostActionCreator = (newposttext) => ({ type: ADD_POST, text: ne
 export const setUsersProfile = (profileInfo) => ({ type: SET_PROFILE_INFO, profileInfo: profileInfo });
 export const setLoadingGif = (flag) => ({ type: SET_LOADING_GIF_PAGE, isLoading: flag });
 export const updateUserStatusActionCreater = (status) => ({ type: UPDATE_USER_STATUS, status: status });
-export const saveAvatarSuccess = (imagePath) => ({type : SAVE_AVATAR, imagePath});
+export const saveAvatarSuccess = (imagePath) => ({ type: SAVE_AVATAR, imagePath });
 
 
 export const getUserProfile = (userId) => async (dispatch) => {
     dispatch(setLoadingGif(true));
     let response = await userApi.getUserProfile(userId)
 
-    if(response.resultCode === 0){
+    if (response.resultCode === 0) {
         dispatch(setUsersProfile(response.result));
     }
 
@@ -96,8 +97,20 @@ export const updateUserStatus = (status) => async (dispatch) => {
 export const saveAvatar = (file) => async (dispatch) => {
     let response = await userApi.saveAvatar(file);
 
-    if(response.resultCode === 0) {
+    if (response.resultCode === 0) {
         dispatch(saveAvatarSuccess(response.result));
+    }
+}
+
+export const saveUser = (user) => async (dispatch) => {
+    let response = await userApi.saveUser(user);
+
+    if (response.resultCode === 0) {
+        dispatch(setUsersProfile(response.result));
+    }
+    else  {
+        dispatch(stopSubmit("profile", { _error: response.message }))
+        return "error";
     }
 }
 

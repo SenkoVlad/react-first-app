@@ -24,6 +24,9 @@ export const userApi = {
     updateUserStatus(status) {
         return axiosInstance.put('users/updatestatus', { status: status }).then(response => response.data);
     },
+    saveUser(user) {
+        return axiosInstance.put('users', user).then(response => response.data);
+    },
     saveAvatar(file) {
         const formdata = new FormData();
         formdata.append('image', file);

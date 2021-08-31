@@ -1,10 +1,24 @@
 import css from './ProfileInfo.module.css'
 import avatar from '../../../www/images/avatar.png'
 import ProfileStatusInfoWithHook from './ProfileStatusInfoWIthHook';
+import { useState } from 'react';
+import ProfileFormData from './ProfileDataForm';
+
 
 const ProfileInfo = (props) => {
+
+  const [isEditMode, setEditMode] = useState(false);
   const fileChoosen = (e) => {
     props.saveAvatar(e.currentTarget.files[0]);
+  }
+
+  const onSubmit = (formdata) => {
+    let result = props.saveUser(formdata);
+    Promise.all([result])
+      .then((result) => {
+        if(result[0] !== 'error')
+          setEditMode(false);
+      });
   }
 
   return (
@@ -14,52 +28,55 @@ const ProfileInfo = (props) => {
       </div>
       {props.isOwner && <input type="file" onChange={(e) => fileChoosen(e)} />}
 
-      {props.profileInfo.photoUrl && <ProfileData profileInfo={props.profileInfo} />}
-
-
-      <div><b>Status: </b>
-        <ProfileStatusInfoWithHook status={props.profileInfo.status} updateUserStatus={props.updateUserStatus} />
-      </div>
-
-      <div>
-        {props.profileInfo.isLookingForAJob === true ? 'Job resume: ' + props.profileInfo.resumeText : ''}
+      <div className={css.profileGeneralInfo}>
+        {isEditMode
+          ? props.profileInfo.name && <ProfileFormData initialValues={props.profileInfo} setEditMode={() => setEditMode(false)} onSubmit={onSubmit} />
+          : props.profileInfo.name && <ProfileData profileInfo={props.profileInfo} isOwner={props.isOwner} setEditMode={() => setEditMode(true)} />
+        }
+        <div><b>Status: </b>
+          <ProfileStatusInfoWithHook status={props.profileInfo.status} updateUserStatus={props.updateUserStatus} />
+        </div>
       </div>
     </div>
   );
 }
 
-const ProfileData = ({ profileInfo }) => {
+const Contact = ({ site, url }) => {
+  return (
+    <div><b>{site}: </b>{url}</div>
+  );
+}
 
-  const Contact = ({ site, url }) => {
-    return (
-      <div><b>{site}: </b>{url}</div>
-    );
-  }
-
+const ProfileData = ({ profileInfo, isOwner, setEditMode }) => {
   return (
     <div>
       <div>
         <b>Full name:</b>{profileInfo.name}
       </div>
       <div>
+        <b>County: </b>{profileInfo.location.country}
+      </div>
+      <div>
         <b>City: </b>{profileInfo.location.city}
       </div>
       <div>
-        <b>Looking job: </b>{profileInfo.IsLookingForAJob}
+        <b>Looking job: </b>{profileInfo.IsLookingForAJob ? 'true' : 'false'}
       </div>
       {profileInfo.isLookingForAJob &&
         <div>
-          <b>: </b>{profileInfo.ResumeText}
+          <b>Resume: </b>{profileInfo.ResumeText}
         </div>
       }
-      <div>
+      <div className={css.contactsBlock}>
         <b>Contacts: </b>
         <div>
           {Object.keys(profileInfo.userContacts).map(key => {
-            return <Contact site={key} url={profileInfo.userContacts[key]} />
+            return <Contact key={key} site={key} url={profileInfo.userContacts[key]} />
           })}
         </div>
       </div>
+
+      {isOwner && <button onClick={setEditMode}>Edit</button>}
     </div>
   );
 }

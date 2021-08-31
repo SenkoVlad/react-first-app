@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ProfileInfo from './ProfileInfo/ProfileInfo'
-import { getUserProfile, setUsersProfile, updateUserStatus, saveAvatar } from '../../redux/profile-reducer'
+import { getUserProfile, setUsersProfile, updateUserStatus, saveAvatar, saveUser } from '../../redux/profile-reducer'
 import Preloader from '../Common/Preloader/Preloader';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
@@ -22,7 +22,8 @@ class ProfileContainer extends React.Component {
               <ProfileInfo isOwner={!this.props.match.params.userId}
                 profileInfo={this.props.profile.profileInfo}
                 updateUserStatus={this.props.updateUserStatus}
-                saveAvatar={this.props.saveAvatar} />
+                saveAvatar={this.props.saveAvatar} 
+                saveUser={this.props.saveUser}/>
               <PostsContainer />
             </div>
         }
@@ -65,6 +66,7 @@ export default compose(
     getUserProfile,
     setUsersProfile,
     updateUserStatus,
+    saveUser,
     saveAvatar
   })
 )(ProfileContainer);

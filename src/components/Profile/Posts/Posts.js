@@ -7,10 +7,10 @@ import { Textarea } from '../../Common/FormControls'
 
 const maxLength10 = maxLengthCreator(10);
 
-const PostForm = (props) => {
+const PostForm = ({ handleSubmit }) => {
   return (
     <div>
-      <form onSubmit={props.handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <div>
           <Field name='newposttext' component={Textarea} validate={[required, maxLength10]} placeholder="New post" />
         </div>
@@ -26,23 +26,23 @@ const ReduxPostForm = reduxForm({
   form: 'post'
 })(PostForm);
 
-const Posts = React.memo((props) => {
-  let postElements = props.posts.map(post => <Post text={post.text} likes={post.likes} key={post.id} />)
+const Posts = React.memo(({ posts, addPost }) => {
+  let postElements = posts.map(post => <Post text={post.text} likes={post.likes} key={post.id} />)
 
   let onSubmit = (formData) => {
-    props.addPost(formData.newposttext);
+    addPost(formData.newposttext);
   }
-    return (
+  return (
+    <div>
       <div>
-        <div>
-          <ReduxPostForm onSubmit={onSubmit} />
-        </div>
-        <h3>My posts</h3>
-        <div className={css.paddingTop10}>
-          {postElements}
-        </div>
+        <ReduxPostForm onSubmit={onSubmit} />
       </div>
-    );
+      <h3>My posts</h3>
+      <div className={css.paddingTop10}>
+        {postElements}
+      </div>
+    </div>
+  );
 });
 
 export default Posts;

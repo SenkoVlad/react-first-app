@@ -5,3 +5,13 @@
 .whiteText {
     color: white;
 }
+.contactsBlock {
+  margin-left: 20px;
+}
+.profileGeneralInfo {
+  margin: 20px 0px;
+}
+.errorBlock {
+  border: red 2px solid;
+  color: red;
+}
