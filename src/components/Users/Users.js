@@ -8,7 +8,7 @@ let Users = React.memo(({totalPageCount, currentPage, users, followingUsersId, u
             <Paginator totalItemsCount={totalPageCount} currentPage={currentPage} setCurrentPage={setCurrentPage} pageSize={pageSize} paginatorPartSize={paginatorPartSize}/>
             {
                 users.map(u =>
-                    <User user={u} followingUsersId={followingUsersId} unfollowUser={unfollowUser} followUser={followUser}/>
+                    <User key={u.id} user={u} followingUsersId={followingUsersId} unfollowUser={unfollowUser} followUser={followUser}/>
                 )}
         </div>);
 });

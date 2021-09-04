@@ -1,4 +1,5 @@
-import { ADD_MESSAGE } from './constants'
+import { dialogApi } from '../Api/Api'
+import { ADD_MESSAGE, SER_CURRENT_DIALOG } from './constants'
 
 let initialState = {
     dialogs: [
@@ -15,7 +16,8 @@ let initialState = {
         { id: 3, text: 'Yo' },
         { id: 4, text: 'Yo' },
         { id: 5, text: 'Yo' }
-    ]
+    ],
+    currentUserDialogId : ''
 }
 
 const dialogReducer = (state = initialState, action) => {
@@ -31,6 +33,11 @@ const dialogReducer = (state = initialState, action) => {
                     messages: [...state.messages, newMessage]
                 }
             }
+        case SER_CURRENT_DIALOG: 
+            return {
+                ...state,
+                currentUserDialogId : action.userId
+            }
         default:
             return {
                 ...state
@@ -44,5 +51,15 @@ const getMaxMessageId = (state) => {
 }
 
 export const newMessageActionCreator = (newMessageText) => ({ type: ADD_MESSAGE, text: newMessageText})
+
+const setCurrentDialog = (userId) => ({type: SER_CURRENT_DIALOG, userId : userId});
+
+export const startDialog = (userId) => async (dispatch) => {
+    let response = await dialogApi.startDialog(userId);
+
+    if(response.resultCode === 0) {
+        dispatch(setCurrentDialog(response.result));
+    }
+}
 
 export default dialogReducer;

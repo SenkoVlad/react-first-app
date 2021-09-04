@@ -33,7 +33,7 @@ export const userApi = {
 
         return axiosInstance.put('users/savephoto', formdata, {
             headers: {
-                'Content-type' : 'multipart/form-data'
+                'Content-type': 'multipart/form-data'
             }
         }).then(response => response.data);
     }
@@ -50,5 +50,11 @@ export const authApi = {
     },
     logout() {
         return axiosInstance.delete("auth/logout").then(response => response.data);
+    }
+}
+
+export const dialogApi = {
+    startDialog(userId) {
+        return axiosInstance.post(`dialog/start/${userId}`).then(response => response.data);
     }
 }
