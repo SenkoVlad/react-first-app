@@ -11,7 +11,7 @@ const Header = (props) => {
                     ?
                     <div>
                         <div>
-                            {props.login}
+                            {props.name}
                         </div>
                         <div>
                             <NavLink to='/login' onClick={props.logout}>Logout</NavLink>
