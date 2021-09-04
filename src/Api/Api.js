@@ -56,5 +56,9 @@ export const authApi = {
 export const dialogApi = {
     startDialog(userId) {
         return axiosInstance.post(`dialog/start/${userId}`).then(response => response.data);
+    },
+    getDialogs(page, count) {
+        return axiosInstance.get(`dialog?page=${page}&count=${count}`)
+                    .then(response => response.data);
     }
 }

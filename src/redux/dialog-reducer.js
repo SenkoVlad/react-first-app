@@ -1,15 +1,9 @@
+import { reset } from 'redux-form'
 import { dialogApi } from '../Api/Api'
-import { ADD_MESSAGE, SER_CURRENT_DIALOG } from './constants'
+import { ADD_MESSAGE, SET_CURRENT_DIALOG, SET_DIALOGS_TOTAL_COUNT, SET_DIALOGS } from './constants'
 
 let initialState = {
-    dialogs: [
-        { id: 1, name: 'Dimych' },
-        { id: 2, name: 'Andrew' },
-        { id: 3, name: 'Sveta' },
-        { id: 4, name: 'Sasha' },
-        { id: 5, name: 'Viktor' },
-        { id: 6, name: 'Valera' }
-    ],
+    dialogs: [],
     messages: [
         { id: 1, text: 'Hi' },
         { id: 2, text: 'How is your it-kamasutra?' },
@@ -17,7 +11,10 @@ let initialState = {
         { id: 4, text: 'Yo' },
         { id: 5, text: 'Yo' }
     ],
-    currentUserDialogId : ''
+    currentUserDialogId: '',
+    currentPage: 1,
+    totalPageCount: 0,
+    pageSize: 5,
 }
 
 const dialogReducer = (state = initialState, action) => {
@@ -33,10 +30,20 @@ const dialogReducer = (state = initialState, action) => {
                     messages: [...state.messages, newMessage]
                 }
             }
-        case SER_CURRENT_DIALOG: 
+        case SET_DIALOGS_TOTAL_COUNT: 
             return {
                 ...state,
-                currentUserDialogId : action.userId
+                totalCount : action.count
+            }
+        case SET_DIALOGS: 
+            return {
+                ...state,
+                dialogs : [...action.dialogs]
+            }
+        case SET_CURRENT_DIALOG:
+            return {
+                ...state,
+                currentUserDialogId: action.userId
             }
         default:
             return {
@@ -50,15 +57,29 @@ const getMaxMessageId = (state) => {
         state.messages[0].id);
 }
 
-export const newMessageActionCreator = (newMessageText) => ({ type: ADD_MESSAGE, text: newMessageText})
+export const newMessageActionCreator = (newMessageText) => ({ type: ADD_MESSAGE, text: newMessageText })
 
-const setCurrentDialog = (userId) => ({type: SER_CURRENT_DIALOG, userId : userId});
+const setCurrentDialog = (userId) => ({ type: SET_CURRENT_DIALOG, userId: userId });
+const setDialogs = (dialogs) => ({type : SET_DIALOGS, dialogs});
+const setDialogsTotalCount = (count) => ({type: SET_DIALOGS_TOTAL_COUNT, count});
 
 export const startDialog = (userId) => async (dispatch) => {
     let response = await dialogApi.startDialog(userId);
 
-    if(response.resultCode === 0) {
+    if (response.resultCode === 0) {
         dispatch(setCurrentDialog(response.result));
+    }
+}
+
+export const sendMessage = (newMessageText) => (dispatch) => {
+    dispatch(newMessageActionCreator(newMessageText));
+    dispatch(reset('message'));
+}
+export const getDialogs = (page, count) => async (dispatch) => {
+    let response = await dialogApi.getDialogs(page, count);
+    if(response.resultCode === 0) {
+        dispatch(setDialogs(response.result.items));
+        dispatch(setDialogsTotalCount(response.totalCount));
     }
 }
 

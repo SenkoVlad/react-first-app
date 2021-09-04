@@ -33,7 +33,7 @@ class App extends React.Component {
         <HeaderContainer />
         <Navbar />
         <div className='dialog-container'>
-          <Route path='/dialogs' render={(props) => SuspenseLoading(DialogsContainer)(props)} />
+          <Route path='/dialogs/:dialogId?' render={(props) => SuspenseLoading(DialogsContainer)(props)} />
           <Route path='/profile/:userId?' render={(props) => SuspenseLoading(ProfileContainer)(props)} />
           <Route path='/music' render={() => <Music />} />  
           <Route path='/news' render={() => <News />} />

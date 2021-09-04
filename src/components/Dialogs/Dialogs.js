@@ -8,14 +8,20 @@ import { required } from "../Common/Utils/Validators";
 
 const MessageForm = (props) => {
     return (
-        <form onSubmit={props.handleSubmit}>
+        <div>
             <div>
-                <Field component={Input} name='newMessageText' validate={[required]} />
+                <div>
+                    <form onSubmit={props.handleSubmit}>
+                        <div>
+                            <Field component={Input} name='newMessageText' validate={[required]} />
+                        </div>
+                        <div>
+                            <button>Send message</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div>
-                <button>Send message</button>
-            </div>
-        </form>
+        </div>
     );
 }
 
@@ -53,9 +59,13 @@ class Dialogs extends React.Component {
     }
 
     render() {
-        let messageElements = this.props.dialogPage.messages.map(elem => <Message message={elem} key={elem.id} />)
-        let dialogElements = this.props.dialogPage.dialogs.map(elem => <DialogItem name={elem.name} id={elem.id} key={elem.id} />)
- 
+        let messageElements = this.props.messages.map(elem => <Message message={elem} key={elem.id} />)
+        let dialogElements = this.props.dialogs.map(elem => <>
+            <DialogItem name={elem.name} id={elem.id} key={elem.id} />
+            <hr/>
+        </>
+        )
+
         let onSubmit = (formData) => {
             this.props.sendMessage(formData.newMessageText);
         }
