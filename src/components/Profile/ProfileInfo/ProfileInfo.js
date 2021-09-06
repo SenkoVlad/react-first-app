@@ -3,11 +3,14 @@ import avatar from '../../../www/images/avatar.png'
 import ProfileStatusInfoWithHook from './ProfileStatusInfoWIthHook';
 import { useState } from 'react';
 import ProfileFormData from './ProfileDataForm';
+import {  useHistory } from 'react-router-dom';
 
 
 const ProfileInfo = (props) => {
 
   const [isEditMode, setEditMode] = useState(false);
+  const history = useHistory();
+
   const fileChoosen = (e) => {
     props.saveAvatar(e.currentTarget.files[0]);
   }
@@ -16,9 +19,14 @@ const ProfileInfo = (props) => {
     let result = props.saveUser(formdata);
     Promise.all([result])
       .then((result) => {
-        if(result[0] !== 'error')
+        if (result[0] !== 'error')
           setEditMode(false);
       });
+  }
+
+  const startDialog = () => {
+    props.startDialog(props.profileInfo.id);
+    history.push('/dialogs');
   }
 
   return (
@@ -28,14 +36,15 @@ const ProfileInfo = (props) => {
       </div>
       {props.isOwner && <input type="file" onChange={(e) => fileChoosen(e)} />}
 
+      <div><b>Status: </b>
+        <ProfileStatusInfoWithHook status={props.profileInfo.status} updateUserStatus={props.updateUserStatus} />
+      </div>
+
       <div className={css.profileGeneralInfo}>
         {isEditMode
           ? props.profileInfo.name && <ProfileFormData initialValues={props.profileInfo} setEditMode={() => setEditMode(false)} onSubmit={onSubmit} />
-          : props.profileInfo.name && <ProfileData profileInfo={props.profileInfo} isOwner={props.isOwner} setEditMode={() => setEditMode(true)} />
+          : props.profileInfo.name && <ProfileData profileInfo={props.profileInfo} isOwner={props.isOwner} setEditMode={() => setEditMode(true)} startDialog={startDialog} />
         }
-        <div><b>Status: </b>
-          <ProfileStatusInfoWithHook status={props.profileInfo.status} updateUserStatus={props.updateUserStatus} />
-        </div>
       </div>
     </div>
   );
@@ -47,7 +56,7 @@ const Contact = ({ site, url }) => {
   );
 }
 
-const ProfileData = ({ profileInfo, isOwner, setEditMode }) => {
+const ProfileData = ({ profileInfo, isOwner, setEditMode, startDialog }) => {
   return (
     <div>
       <div>
@@ -77,6 +86,12 @@ const ProfileData = ({ profileInfo, isOwner, setEditMode }) => {
       </div>
 
       {isOwner && <button onClick={setEditMode}>Edit</button>}
+      {isOwner ||
+        <div>
+          <button onClick={startDialog}>Dialog</button>
+          {/* <NavLink to={'/dialogs/' + profileInfo.id} onClick={startDialog}>Dialog</NavLink> */}
+        </div>
+      }
     </div>
   );
 }

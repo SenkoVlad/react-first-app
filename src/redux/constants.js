@@ -17,3 +17,11 @@ export const UPDATE_USER_STATUS = 'update-user-status';
 export const DELETE_AUTH_DATA = 'delete-auth-data';
 export const SET_INITIALIZATION_DATA = 'set-initialization-data';
 export const SAVE_AVATAR = 'set-avatar';
+
+//  DIALOG
+export const SET_DIALOGS = 'set-dialogs';
+export const SET_DIALOGS_TOTAL_COUNT = 'set-dialogs-total-count';
+export const SET_CURRENT_DIALOG_ID = 'set-current_dialog-id';
+export const SET_MESSAGES = 'set-messages';
+
+

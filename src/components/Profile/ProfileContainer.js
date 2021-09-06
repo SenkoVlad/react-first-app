@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ProfileInfo from './ProfileInfo/ProfileInfo'
 import { getUserProfile, setUsersProfile, updateUserStatus, saveAvatar, saveUser } from '../../redux/profile-reducer'
+import {startDialog} from '../../redux/dialog-reducer'
 import Preloader from '../Common/Preloader/Preloader';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
@@ -23,7 +24,10 @@ class ProfileContainer extends React.Component {
                 profileInfo={this.props.profile.profileInfo}
                 updateUserStatus={this.props.updateUserStatus}
                 saveAvatar={this.props.saveAvatar} 
-                saveUser={this.props.saveUser}/>
+                saveUser={this.props.saveUser}
+                startDialog={() => this.props.startDialog(this.props.profile.profileInfo.id, 
+                                                          this.props.messagePage, 
+                                                          this.props.messagesPageSize)}/>
               <PostsContainer />
             </div>
         }
@@ -56,7 +60,9 @@ class ProfileContainer extends React.Component {
 let mapStateToProps = (state) => {
   return {
     userId: state.auth.userId,
-    profile: state.profilePage
+    profile: state.profilePage,
+    messagePage: state.dialogsPage.currentMessagePage,
+    messagesPageSize: state.dialogsPage.messagesPageSize
   }
 }
 
@@ -67,6 +73,7 @@ export default compose(
     setUsersProfile,
     updateUserStatus,
     saveUser,
-    saveAvatar
+    saveAvatar,
+    startDialog
   })
 )(ProfileContainer);

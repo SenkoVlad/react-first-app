@@ -2,7 +2,10 @@ import * as axios from 'axios'
 
 const axiosInstance = axios.create({
     withCredentials: true,
-    baseURL: 'https://localhost:5001/'
+    baseURL: 'https://localhost:5001/',
+    headers: {
+        'Content-Type': 'application/json',
+        'accept': '*/*'}
 });
 
 export const userApi = {
@@ -33,7 +36,7 @@ export const userApi = {
 
         return axiosInstance.put('users/savephoto', formdata, {
             headers: {
-                'Content-type' : 'multipart/form-data'
+                'Content-type': 'multipart/form-data'
             }
         }).then(response => response.data);
     }
@@ -50,5 +53,24 @@ export const authApi = {
     },
     logout() {
         return axiosInstance.delete("auth/logout").then(response => response.data);
+    }
+}
+
+export const dialogApi = {
+    startDialog(userId) {
+        return axiosInstance.post(`dialog/start/${userId}`).then(response => response.data);
+    },
+    getDialogs(page, count) {
+        return axiosInstance.get(`dialog?page=${page}&count=${count}`)
+            .then(response => response.data);
+    },
+    getMessages(dialogId, page, count) {
+        return axiosInstance.get(`message?dialogId=${dialogId}&page=${page}&count=${count}`)
+            .then(response => response.data);
+    },
+    sendMessage(messageText, dialogId) {
+        return axiosInstance.post(`message?dialogId=${dialogId}`,
+           `"${messageText}"`
+        ).then(response => response.data);
     }
 }
