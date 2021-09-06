@@ -18,7 +18,6 @@ const appReducer = (state = initialState, action) => {
     }
 }
 export const setInitializationState = (flag) => ({ type: SET_INITIALIZATION_DATA, data: flag })
-
 export const initialize = () => (dispatch) => {
     let promises = getAuthState()(dispatch);
 

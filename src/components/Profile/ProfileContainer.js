@@ -25,7 +25,9 @@ class ProfileContainer extends React.Component {
                 updateUserStatus={this.props.updateUserStatus}
                 saveAvatar={this.props.saveAvatar} 
                 saveUser={this.props.saveUser}
-                startDialog={this.props.startDialog}/>
+                startDialog={() => this.props.startDialog(this.props.profile.profileInfo.id, 
+                                                          this.props.messagePage, 
+                                                          this.props.messagesPageSize)}/>
               <PostsContainer />
             </div>
         }
@@ -58,7 +60,9 @@ class ProfileContainer extends React.Component {
 let mapStateToProps = (state) => {
   return {
     userId: state.auth.userId,
-    profile: state.profilePage
+    profile: state.profilePage,
+    messagePage: state.dialogsPage.currentMessagePage,
+    messagesPageSize: state.dialogsPage.messagesPageSize
   }
 }
 

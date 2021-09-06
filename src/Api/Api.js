@@ -2,7 +2,10 @@ import * as axios from 'axios'
 
 const axiosInstance = axios.create({
     withCredentials: true,
-    baseURL: 'https://localhost:5001/'
+    baseURL: 'https://localhost:5001/',
+    headers: {
+        'Content-Type': 'application/json',
+        'accept': '*/*'}
 });
 
 export const userApi = {
@@ -59,6 +62,15 @@ export const dialogApi = {
     },
     getDialogs(page, count) {
         return axiosInstance.get(`dialog?page=${page}&count=${count}`)
-                    .then(response => response.data);
+            .then(response => response.data);
+    },
+    getMessages(dialogId, page, count) {
+        return axiosInstance.get(`message?dialogId=${dialogId}&page=${page}&count=${count}`)
+            .then(response => response.data);
+    },
+    sendMessage(messageText, dialogId) {
+        return axiosInstance.post(`message?dialogId=${dialogId}`,
+           `"${messageText}"`
+        ).then(response => response.data);
     }
 }

@@ -3,7 +3,7 @@ import avatar from '../../../www/images/avatar.png'
 import ProfileStatusInfoWithHook from './ProfileStatusInfoWIthHook';
 import { useState } from 'react';
 import ProfileFormData from './ProfileDataForm';
-import { useHistory } from 'react-router-dom';
+import {  useHistory } from 'react-router-dom';
 
 
 const ProfileInfo = (props) => {
@@ -56,8 +56,6 @@ const Contact = ({ site, url }) => {
   );
 }
 
-//test commit
-
 const ProfileData = ({ profileInfo, isOwner, setEditMode, startDialog }) => {
   return (
     <div>
@@ -88,7 +86,12 @@ const ProfileData = ({ profileInfo, isOwner, setEditMode, startDialog }) => {
       </div>
 
       {isOwner && <button onClick={setEditMode}>Edit</button>}
-      {isOwner || <button onClick={startDialog}>Dialog</button>}
+      {isOwner ||
+        <div>
+          <button onClick={startDialog}>Dialog</button>
+          {/* <NavLink to={'/dialogs/' + profileInfo.id} onClick={startDialog}>Dialog</NavLink> */}
+        </div>
+      }
     </div>
   );
 }

@@ -69,6 +69,7 @@ export const logout = () => async (dispatch) => {
 
     if (response.resultCode === 0) {
         dispatch(deleteAuthData());
+        window.location.reload(true);
     }
 }
 
