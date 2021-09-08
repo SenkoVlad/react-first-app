@@ -21,6 +21,9 @@ const Navbar = () => {
             <div>
                 <NavLink to='/users' className={css.item} activeClassName={css.active}>Users</NavLink>
             </div>
+            <div>
+                <NavLink to='/grpc' className={css.item} activeClassName={css.active}>Grpc</NavLink>
+            </div>
         </nav>
     );
 }

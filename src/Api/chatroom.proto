@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option csharp_namespace = "senkovlad.chat.shared";
+
+package chatroom;
+
+service ChatRoom {
+	rpc JoinChat(ChatMessageRequest) returns (stream ChatMessageResponse);
+	rpc SendMessage(ChatMessageRequest) returns (ChatMessageResponse);
+}
+
+message ChatMessageRequest {
+	string messageText = 1;
+}
+message ChatMessageResponse {
+	string message = 1;
+}

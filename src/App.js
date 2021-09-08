@@ -16,6 +16,7 @@ import { BrowserRouter } from 'react-router-dom'
 import store from './redux/redux-store';
 import { Provider } from 'react-redux'
 import { SuspenseLoading } from './Hoc/suspenseLoading';
+import Grpc from './components/Grpc/grpc';
 const DialogsContainer = React.lazy(() =>  import('./components/Dialogs/DialogsContainer'));
 const ProfileContainer = React.lazy(() =>  import('./components/Profile/ProfileContainer'));
 class App extends React.Component {
@@ -40,6 +41,7 @@ class App extends React.Component {
           <Route path='/settings' render={() => <Settings />} />
           <Route path='/users' render={() => <UsersContainer />} />
           <Route path='/login' render={() => <LoginContainer />} />
+          <Route path='/grpc' render={() => <Grpc />} />
         </div>
       </div>
     );
